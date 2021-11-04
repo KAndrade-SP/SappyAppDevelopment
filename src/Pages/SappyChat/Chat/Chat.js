@@ -11,7 +11,7 @@ export default function SappyChat() {
 
     useEffect(() => {
         firebase.database()
-            .ref('users')
+            .ref('Users')
             .once('value')
             .then(snapshot => {
                 const data = Object.values(snapshot.val())
@@ -32,7 +32,7 @@ export default function SappyChat() {
             })
 
         firebase.database()
-            .ref('messages')
+            .ref('Messages')
             .once('value')
             .then(snapshot => {
                 const data = Object.values(snapshot.val())
@@ -40,7 +40,7 @@ export default function SappyChat() {
                 data.map(({ user }) => {
                     if (user.to == current_user) {
                         firebase.database()
-                            .ref('users')
+                            .ref('Users')
                             .once('value')
                             .then(snapshot2 => {
                                 const data2 = Object.values(snapshot2.val())

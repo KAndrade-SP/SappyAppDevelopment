@@ -17,7 +17,7 @@ export default function Profile() {
 
     useEffect(() => {
         firebase.database()
-            .ref(`users/${uid}`)
+            .ref(`Users/${uid}`)
             .once('value')
             .then(snapshot => {
                 const { age, area, isProf, name } = snapshot.val()
@@ -26,15 +26,15 @@ export default function Profile() {
                 setIsProf(isProf)
                 setArea(area)
             });
-            
+
     }, [])
 
     async function changeData(id, name, age, area, photoUrl) {
 
         console.log(id, name, age, area, photoUrl)
-    
+
         await firebase.database()
-            .ref(`users/${id}`)
+            .ref(`Users/${id}`)
             .update({
                 name,
                 age,
@@ -44,7 +44,7 @@ export default function Profile() {
             .then(() => {
                 alert("Dados alterados com sucesso!")
             });
-    
+
     };
 
     return (
@@ -112,9 +112,9 @@ export default function Profile() {
                 onPress={() => changeData()}
             >
                 <SimpleLineIcons
-                name="pencil" 
-                color={'#f5f5f5'} 
-                size={22} 
+                    name="pencil"
+                    color={'#f5f5f5'}
+                    size={22}
                 />
             </TouchableOpacity>
         </View>

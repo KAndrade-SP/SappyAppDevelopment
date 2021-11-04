@@ -15,7 +15,7 @@ function ModalDisableUser({ open, onClose }) {
 
     async function fetchData() {
         await firebase.database()
-            .ref(`users/${uid}`)
+            .ref(`Users/${uid}`)
             .once('value')
             .then(snapshot => {
                 const { securityPassword } = snapshot.val()
@@ -51,8 +51,8 @@ function ModalDisableUser({ open, onClose }) {
         const isActive = 'false'
 
         if (validDB === true && validInp === true) {
-            const {uid} = firebase.auth().currentUser.providerData[0]
-            firebase.database().ref(`users/${uid}`).remove()
+            const { uid } = firebase.auth().currentUser.providerData[0]
+            firebase.database().ref(`Users/${uid}`).remove()
             firebase.auth().currentUser.delete().then(() => {
                 console.log('Conta desativada')
                 alert('Sua conta foi desativada.')

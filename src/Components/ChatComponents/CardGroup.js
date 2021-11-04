@@ -8,7 +8,7 @@ export default function CardGroup({ Title, Desc, ImageGp }) {
     const navigator = useNavigation()
 
     function chatGroup() {
-        navigator.navigate('ChatGroup')
+        navigator.navigate('ChatGroup', { title: Title })
     }
 
     return (
@@ -16,7 +16,7 @@ export default function CardGroup({ Title, Desc, ImageGp }) {
             <View style={styles.spaceGroup}>
                 <View style={styles.cardGroup}>
                     <View style={styles.divValuesGroup}>
-                        <Image source={ImageGp} style={styles.imageGroup} />
+                        <Image source={{ uri: ImageGp }} style={styles.imageGroup} />
                         <View style={styles.divNameDesc}>
                             <Text style={styles.groupName}>{Title}</Text>
                             <Text style={styles.groupDescription}>{Desc}</Text>
@@ -25,14 +25,14 @@ export default function CardGroup({ Title, Desc, ImageGp }) {
                             <TouchableOpacity
                                 style={styles.enterButton}
                                 onPress={() => chatGroup()}
-                                >
+                            >
                                 <Text style={styles.text}>Acessar</Text>
                             </TouchableOpacity>
-                        </View>            
+                        </View>
                     </View>
                 </View>
             </View>
         </View>
-        
+
     );
 }

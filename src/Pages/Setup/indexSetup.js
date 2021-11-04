@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity} from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -11,144 +11,144 @@ import styles from './styleSetup'
 import ModalUserList from '../../Components/ModalComponents/ModalUserList';
 import ModalDisableUser from '../../Components/ModalComponents/ModalDisableUser';
 
-export default function Setup(){
+export default function Setup() {
 
     const navigation = useNavigation();
-    
+
     const signOutFirebase = async () => {
 
         await firebase.auth().signOut().then(() => {
 
             navigation.reset({
                 index: 0,
-                routes: [{name: 'Login'}],
-            });  
+                routes: [{ name: 'Login' }],
+            });
 
-        }).catch((error) => {  
+        }).catch((error) => {
 
         });
 
     };
 
-    const {uid} = firebase.auth().currentUser.providerData[0]
+    const { uid } = firebase.auth().currentUser.providerData[0]
     const [validAdm, setValidAdm] = useState([])
-    
+
     useEffect(() => {
         firebase.database()
-        .ref(`users/${uid}`)
-        .once('value')
-        .then(snapshot => {
-            const data = snapshot.val()
-            if(data.isAdmin != "false") setValidAdm(true)
-        })
+            .ref(`Users/${uid}`)
+            .once('value')
+            .then(snapshot => {
+                const data = snapshot.val()
+                if (data.isAdmin != "false") setValidAdm(true)
+            })
 
     }, [])
 
     const [openList, setOpenList] = useState(false)
     const [disable, setOpenDisable] = useState(false)
 
-    function goToProfile(){
+    function goToProfile() {
         navigation.navigate('Profile')
     };
 
-    function goToUserList(){
+    function goToUserList() {
         setOpenList(!openList)
     };
 
-    function goToDisableUser(){
+    function goToDisableUser() {
         setOpenDisable(!disable)
     }
 
-    return(
+    return (
         <View
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}
         >
-            <ModalUserList open={openList} onClose={() => setOpenList(false)}/>
-            <ModalDisableUser open={disable} onClose={() => setOpenDisable(false)}/>
-            <View 
+            <ModalUserList open={openList} onClose={() => setOpenList(false)} />
+            <ModalDisableUser open={disable} onClose={() => setOpenDisable(false)} />
+            <View
                 style={styles.options}
             >
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.contentOptions}
                     onPress={() => goToProfile()}
                 >
-                    <SimpleLineIcons 
+                    <SimpleLineIcons
                         style={styles.iconMod}
-                        name="user" 
-                        color={'#ccad00'} 
-                        size={22} 
+                        name="user"
+                        color={'#ccad00'}
+                        size={22}
                     />
-                    <Text 
+                    <Text
                         style={styles.textOptions}
-                        >Perfil
-                    </Text>                   
-                </TouchableOpacity>          
+                    >Perfil
+                    </Text>
+                </TouchableOpacity>
 
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.contentOptions}
                     onPress={() => goToDisableUser()}
                 >
                     <SimpleLineIcons
                         style={styles.iconMod}
-                        name="user-unfollow" 
-                        color={'#ccad00'} 
-                        size={22} 
+                        name="user-unfollow"
+                        color={'#ccad00'}
+                        size={22}
                     />
-                    <Text 
+                    <Text
                         style={styles.textOptions}
-                        >Desativar conta
-                    </Text>                  
+                    >Desativar conta
+                    </Text>
                 </TouchableOpacity>
 
-                { validAdm != false ? <TouchableOpacity 
-                style={styles.contentOptions}
-                onPress={goToUserList}
+                {validAdm != false ? <TouchableOpacity
+                    style={styles.contentOptions}
+                    onPress={goToUserList}
                 >
-                <SimpleLineIcons 
-                    style={styles.iconMod}
-                    name="user-follow" 
-                    color={'#ccad00'} 
-                    size={22} 
-                />
-                <Text 
-                    style={styles.textOptions}
+                    <SimpleLineIcons
+                        style={styles.iconMod}
+                        name="user-follow"
+                        color={'#ccad00'}
+                        size={22}
+                    />
+                    <Text
+                        style={styles.textOptions}
                     >Tornar Profissional
-                </Text>                   
+                    </Text>
                 </TouchableOpacity> : console.log('')}
 
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.contentOptions}
                 >
-                    <SimpleLineIcons 
+                    <SimpleLineIcons
                         style={styles.iconMod}
-                        name="question" 
-                        color={'#ccad00'} 
-                        size={22} 
+                        name="question"
+                        color={'#ccad00'}
+                        size={22}
                     />
-                    <Text 
+                    <Text
                         style={styles.textOptions}
-                        >Ajuda
-                    </Text>                  
+                    >Ajuda
+                    </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.contentOptions}
                     onPress={signOutFirebase}
                 >
-                    <SimpleLineIcons 
+                    <SimpleLineIcons
                         style={styles.iconMod}
-                        name="logout" 
-                        color={'#ccad00'} 
+                        name="logout"
+                        color={'#ccad00'}
                         size={22}
-                        onPress={signOutFirebase} 
+                        onPress={signOutFirebase}
                     />
-                    <Text 
+                    <Text
                         style={styles.textOptions}
                         onPress={signOutFirebase}
-                        >Sair
-                    </Text>                  
-                </TouchableOpacity>   
+                    >Sair
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
     )

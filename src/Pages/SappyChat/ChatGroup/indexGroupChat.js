@@ -1,33 +1,61 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { LogBox, Platform, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { GiftedChat, Send } from '../../../Components/react-native-gifted-chat/lib';
 import api from '../../../Config/API';
+import firebase from '../../../Config/firebaseconfig.js'
 
+export default function GroupChat({ route }) {
 
-export default function GroupChat() {
+    const nameGroup = route.params?.title
+    const navigator = useNavigation()
 
+    const [username, setUsername] = useState()
     const [messages, setMessages] = useState([])
-    useEffect(() => {
-        if (Platform.OS != "web") {
-            LogBox.ignoreAllLogs(['Setting a timer for a long period of time'])
-        }
-        api.updateMessages((msg) => {
-            setMessages(previousMessages => GiftedChat.append(previousMessages, msg))
-        })
-    }, [])
+
+    const { photoURL, uid } = firebase.auth().currentUser.providerData[0]
+
+    firebase.database().ref(`Users/${uid}`).once('value').then(snapshot => {
+        const { name } = snapshot.val()
+        setUsername(name)
+    })
 
     const user = {
-        _id: 2,
-        name: 'josé'
+        _id: uid,
+        name: username,
+        avatar: photoURL,
+        chatName: nameGroup
     }
 
-    const onSend = useCallback((messages = []) => {
-        messages.forEach(message => {
-            message.createdAt = new Date().getTime()
-            api.createMessage(message)
-        });
+    useEffect(() => {
+        setMessages([])
+
+        navigator.setOptions({ title: nameGroup })
+
+        if (Platform.OS != "web") {
+            LogBox.ignoreAllLogs(true)
+            LogBox.ignoreLogs(['Setting a timer'])
+        }
+
+        api.updateGroupMessages(msg => {
+
+            if (msg.user.chatName == nameGroup) {
+                setMessages(previousMessages => GiftedChat.append(previousMessages, msg))
+            }
+        }, way => { return nameGroup })
+
     }, [])
+
+    function onSendMessage(messages, way = nameGroup) {
+        messages.forEach(message => {
+            let msg = `${message.text}`.trimEnd()
+            if (msg != '' && msg != null) {
+                message.createdAt = new Date().getTime();
+                api.createGroupMessage(message, way);
+            }
+        })
+    }
 
 
     const renderSend = (props) => {
@@ -46,11 +74,13 @@ export default function GroupChat() {
 
     return (
         <GiftedChat
+            isTyping={true}
             user={user}
             messages={messages}
-            onSend={messages => onSend(messages)}
+            showAvatarForEveryMessage={false}
+            showUserAvatar={false}
+            onSend={onSendMessage}
             renderSend={renderSend}
-            renderUsernameOnMessage={true}
             isTyping={true}
             alwaysShowSend={true}
         />

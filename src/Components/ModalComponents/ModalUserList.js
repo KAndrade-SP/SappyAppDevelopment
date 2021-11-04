@@ -11,48 +11,48 @@ function ModalUserList({ open, onClose }) {
 
     async function fetchData() {
         await firebase.database()
-            .ref('users')
+            .ref('Users')
             .once('value')
             .then(snapshot => {
                 const data = Object.values(snapshot.val())
                 setList(data.map(({ name, isProf }, key) => {
-                    
+
                     return (
                         <View style={styles.contentUser} key={key}>
                             <Text style={styles.text}>{name}</Text>
                             {isProf == "true"
-                            ?
-                            <TouchableOpacity
-                                style={styles.iconButton}
-                                onPress={() => {
-                                    const keyid = Object.keys(snapshot.val())[key]
-                                    console.log(keyid)
-                                    changeStatusProf("false", keyid)
-                                    alert(`O usuario ${name}, não é mais um Profissional`)
-                                }}
-                            >
-                                <SimpleLineIcons
-                                    name="check"
-                                    color={'#00c853'}
-                                    size={22}
-                                />
-                            </TouchableOpacity>
-                            :
-                            <TouchableOpacity
-                                style={styles.iconButton}
-                                onPress={() => {
-                                    const keyid = Object.keys(snapshot.val())[key]
-                                    console.log(keyid)
-                                    changeStatusProf("true", keyid)
-                                    alert(`O usuario ${name}, agora é um Profissional`)
-                                }}
-                            >
-                                <SimpleLineIcons
-                                    name="close"
-                                    color={'#ff5131'}
-                                    size={22}
-                                />
-                            </TouchableOpacity>}
+                                ?
+                                <TouchableOpacity
+                                    style={styles.iconButton}
+                                    onPress={() => {
+                                        const keyid = Object.keys(snapshot.val())[key]
+                                        console.log(keyid)
+                                        changeStatusProf("false", keyid)
+                                        alert(`O usuario ${name}, não é mais um Profissional`)
+                                    }}
+                                >
+                                    <SimpleLineIcons
+                                        name="check"
+                                        color={'#00c853'}
+                                        size={22}
+                                    />
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity
+                                    style={styles.iconButton}
+                                    onPress={() => {
+                                        const keyid = Object.keys(snapshot.val())[key]
+                                        console.log(keyid)
+                                        changeStatusProf("true", keyid)
+                                        alert(`O usuario ${name}, agora é um Profissional`)
+                                    }}
+                                >
+                                    <SimpleLineIcons
+                                        name="close"
+                                        color={'#ff5131'}
+                                        size={22}
+                                    />
+                                </TouchableOpacity>}
                         </View>
                     )
                 }))
@@ -62,13 +62,13 @@ function ModalUserList({ open, onClose }) {
 
     useEffect(() => {
         fetchData()
-        return () => {setList([])}
+        return () => { setList([]) }
     }, [])
 
     async function changeStatusProf(isProf, id) {
 
         await firebase.database()
-            .ref(`users/${id}`)
+            .ref(`Users/${id}`)
             .update({
                 isProf,
             }).then(fetchData())
