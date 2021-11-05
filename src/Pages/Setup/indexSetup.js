@@ -10,6 +10,7 @@ import styles from './styleSetup'
 
 import ModalUserList from '../../Components/ModalComponents/ModalUserList';
 import ModalDisableUser from '../../Components/ModalComponents/ModalDisableUser';
+import ModalHelp from '../../Components/ModalComponents/ModalHelp';
 
 export default function Setup() {
 
@@ -24,9 +25,7 @@ export default function Setup() {
                 routes: [{ name: 'Login' }],
             });
 
-        }).catch((error) => {
-
-        });
+        })
 
     };
 
@@ -46,6 +45,7 @@ export default function Setup() {
 
     const [openList, setOpenList] = useState(false)
     const [disable, setOpenDisable] = useState(false)
+    const [help, setOpenHelp] = useState(false)
 
     function goToProfile() {
         navigation.navigate('Profile')
@@ -59,6 +59,10 @@ export default function Setup() {
         setOpenDisable(!disable)
     }
 
+    function goToHelp() {
+        setOpenHelp(!help)
+    }
+
     return (
         <View
             behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -66,6 +70,8 @@ export default function Setup() {
         >
             <ModalUserList open={openList} onClose={() => setOpenList(false)} />
             <ModalDisableUser open={disable} onClose={() => setOpenDisable(false)} />
+            <ModalHelp open={help} onClose={() => setOpenHelp(false)} />
+
             <View
                 style={styles.options}
             >
@@ -119,6 +125,7 @@ export default function Setup() {
 
                 <TouchableOpacity
                     style={styles.contentOptions}
+                    onPress={() => goToHelp()}
                 >
                     <SimpleLineIcons
                         style={styles.iconMod}

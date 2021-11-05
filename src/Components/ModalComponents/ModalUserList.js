@@ -29,6 +29,7 @@ function ModalUserList({ open, onClose }) {
                                         console.log(keyid)
                                         changeStatusProf("false", keyid)
                                         alert(`O usuario ${name}, não é mais um Profissional`)
+                                        ToastAndroid.show(`O usuario ${name}, não é mais um Profissional`, ToastAndroid.SHORT);
                                     }}
                                 >
                                     <SimpleLineIcons

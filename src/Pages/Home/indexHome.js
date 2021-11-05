@@ -28,7 +28,6 @@ export default function Home() {
         inactiveColor="#f5f5f5"
         barStyle={{
           backgroundColor: "#000710",
-          position: 'absolute',
           borderTopWidth: 0.5,
           borderTopColor: "#ffffff",
           width: Dimensions.get('window').width,
@@ -37,7 +36,6 @@ export default function Home() {
         }}
 
       >
-
         <Tab.Screen
           name="Grupos"
           options={{

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, Text, View, StyleSheet, TextInput } from "react-native";
+import { TouchableOpacity, Text, View, StyleSheet, TextInput, ToastAndroid } from "react-native";
 import Modal from 'react-native-modal'
 import firebase from '../../Config/firebaseconfig'
 import { useNavigation } from '@react-navigation/native';
@@ -48,14 +48,12 @@ function ModalDisableUser({ open, onClose }) {
     async function disableUser() {
         const validInp = firstPass == secondPass ? true : false
         const validDB = firstPass == DBPass ? true : false
-        const isActive = 'false'
 
         if (validDB === true && validInp === true) {
             const { uid } = firebase.auth().currentUser.providerData[0]
             firebase.database().ref(`Users/${uid}`).remove()
             firebase.auth().currentUser.delete().then(() => {
-                console.log('Conta desativada')
-                alert('Sua conta foi desativada.')
+                ToastAndroid.show("Sua conta foi desativada", ToastAndroid.LONG);
 
             }).catch(function (error) {
                 console.error({ error })
@@ -63,7 +61,7 @@ function ModalDisableUser({ open, onClose }) {
 
             signOutFirebase()
         } else {
-            alert('As senhas não são iguais')
+            ToastAndroid.show("As senhas não iguais", ToastAndroid.SHORT);
         }
 
     }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, TextInput, Image, TouchableOpacity } from "react-native";
+import { Text, View, TextInput, Image, TouchableOpacity, ToastAndroid } from "react-native";
 
+import { useNavigation } from '@react-navigation/native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 import firebase from '../../../Config/firebaseconfig'
@@ -9,6 +10,7 @@ import styles from './styleProfile'
 export default function Profile() {
 
     const { uid, photoURL } = firebase.auth().currentUser.providerData[0]
+    const navigation = useNavigation();
 
     const [nameUser, setNameUser] = useState()
     const [ageUser, setAgeUser] = useState()
@@ -16,6 +18,7 @@ export default function Profile() {
     const [area, setArea] = useState()
 
     useEffect(() => {
+
         firebase.database()
             .ref(`Users/${uid}`)
             .once('value')
@@ -31,8 +34,6 @@ export default function Profile() {
 
     async function changeData(id, name, age, area, photoUrl) {
 
-        console.log(id, name, age, area, photoUrl)
-
         await firebase.database()
             .ref(`Users/${id}`)
             .update({
@@ -42,7 +43,8 @@ export default function Profile() {
                 photoUrl
             })
             .then(() => {
-                alert("Dados alterados com sucesso!")
+                ToastAndroid.show("Dados alterados com sucesso!", ToastAndroid.SHORT)
+                navigation.navigate('Home')
             });
 
     };
@@ -109,7 +111,7 @@ export default function Profile() {
 
             <TouchableOpacity
                 style={styles.floatButton}
-                onPress={() => changeData()}
+                onPress={() => changeData(uid, nameUser, ageUser, area, photoURL)}
             >
                 <SimpleLineIcons
                     name="pencil"

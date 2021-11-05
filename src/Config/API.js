@@ -39,7 +39,7 @@ const api = {
     },
 
     updateGroupMessages: (callback, way) => {
-        let theWay = way()
+        const theWay = way()
         firebase.database()
             .ref(`Grupos/${theWay}/Messages`)
             .on("child_added", snapshot => {

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     spaceGroup: {
         flex: 1,
         paddingRight: 8,
-        paddingLeft: 8, 
+        paddingLeft: 8,
     },
 
     cardGroup: {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 70,
         marginTop: 4,
-        paddingLeft: 12
+        paddingLeft: 12,
     },
 
     divValuesGroup: {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
     divNameDesc: {
         marginLeft: 12
-    }, 
+    },
 
     groupName: {
         fontSize: 16,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#f5f5f580',
         fontStyle: 'italic'
-    }, 
+    },
 
     containerButton: {
         flex: 1,
