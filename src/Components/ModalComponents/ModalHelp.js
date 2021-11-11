@@ -1,5 +1,5 @@
-import React from "react";
-import { TouchableOpacity, Text, View, StyleSheet, TextInput, ToastAndroid } from "react-native";
+import React from "react"
+import { TouchableOpacity, Text, View, StyleSheet } from "react-native"
 import Modal from 'react-native-modal'
 
 function ModalHelp({ open, onClose }) {
@@ -14,19 +14,55 @@ function ModalHelp({ open, onClose }) {
                 animationOutTiming={800}
                 animationInTiming={800}
                 backdropOpacity={0}
-                style={styles.modal}
+                style={styles.containerModal}
             >
-                <Text style={styles.text}>
-                    TEXTO PARA AJUDAR E TALS
+                <Text style={styles.titleText}>COMO USAR</Text>
+
+                <Text style={styles.normalText}>
+                    O Naruto pode ser um pouco duro às vezes,
+                    talvez você não saiba disso, mas o Naruto também cresceu sem pai.
+                    Na verdade ele nunca conheceu nenhum de seus pais,
+                    e nunca teve nenhum amigo em nossa aldeia.
+                    Mesmo assim eu nunca vi ele chorar, ficar zangado ou se dar por vencido,
+                    ele está sempre disposto a melhorar, ele quer ser respeitado,
+                    é o sonho dele e o Naruto daria a vida por isso sem hesitar.
+                    Meu palpite é que ele se cansou de chorar e
+                    decidiu fazer alguma coisa a respeito!
                 </Text>
 
+                <Text style={styles.titleText}>CONTATO</Text>
+
+                <Text style={styles.footerTitle}>E-mail:
+                    <Text style={styles.footerText}>
+                        ⠀Safety2dsntcc@gmail.com
+                    </Text>
+                </Text>
+
+                <Text style={styles.footerTitle}>Telefone:
+                    <Text style={styles.footerText}>
+                        ⠀11 96813-9649
+                    </Text>
+                </Text>
+
+                <Text style={styles.footerTitle}>Endereço: 
+                    <Text style={styles.footerText}>
+                        ⠀Santo Eduardo - Embu das Artes
+                    </Text>
+                </Text>
+                
+                <Text style={styles.footerTitle}>Autor:
+                    <Text style={styles.footerText}>
+                        ⠀Nobru apelo
+                    </Text>
+                </Text> 
+
                 <View style={styles.containerButton}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={onClose()}
-                    >
-                        <Text style={styles.text}>Cancelar</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={onClose}
+                >
+                    <Text style={styles.normalText}>Fechar</Text>
+                </TouchableOpacity>
                 </View>
             </Modal>
         </View>
@@ -34,51 +70,58 @@ function ModalHelp({ open, onClose }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        position: 'absolute',
-        flex: 1
-    },
+    container: { position: 'absolute' },
+
     containerModal: {
-        width: '100%',
-        height: 350,
+        width: "90%",
         borderRadius: 20,
         backgroundColor: '#212121',
-        justifyContent: 'center',
-        alignItems: 'center',
         paddingStart: 12,
         paddingEnd: 12,
     },
 
-    modal: {
+    containerButton: {
         alignItems: 'center',
-        justifyContent: 'center',
+        paddingTop: 25,
     },
 
     button: {
-        flex: 1,
-        backgroundColor: '#00c85392',
+        backgroundColor: '#00c85330',
         borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    containerButton: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        marginTop: 12,
-        marginBottom: 12,
-        marginRight: 12,
-        marginLeft: 12,
-    },
-    text: {
-        color: '#f5f5f5',
-        fontSize: 14,
+        paddingTop: 5,
+        paddingLeft: 30,
+        paddingRight: 30,
+        alignItems: 'center'
     },
 
-    title: {
-        alignSelf: 'center',
+    footerText: {
+        color: '#f5f5f5',
+        fontSize: 14,
+        fontWeight: 'normal',
+    },
+
+    footerTitle: {
         color: '#f5f5f5',
         fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 2,
     },
+
+    titleText: {
+        color: '#f5f5f5',
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center'
+    },
+
+    normalText: {
+        color: '#f5f5f5',
+        fontSize: 14,
+        marginBottom: 10,
+        textAlign: 'justify'
+    },
+
 })
 
 export default ModalHelp;

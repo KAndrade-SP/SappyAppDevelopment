@@ -1,33 +1,30 @@
 import firebase from './firebaseconfig'
 
 const api = {
-    createUser: async (email, id, name, photoUrl, area = '', securityPassword = 1234, age = '', isAdmin = 'false', isProf = 'false') => {
-        const dataBase = firebase.database().ref(`Users/${id}`)
 
+    // Função para criar usuário, com dados recebidos a tela de login.
+    createUser: async (email, id, name, photoUrl, area = '', isAdmin = 'false', isProf = 'false') => {
+        const dataBase = firebase.database().ref(`Users/${id}`)
         await dataBase.once('value')
             .then(snapshot => {
+                // Irá criar os dados se não existirem no banco.
                 if (!snapshot.val())
                     dataBase.set({
                         email,
                         name,
                         photoUrl,
-                        age,
                         isAdmin,
                         isProf,
-                        area,
-                        securityPassword
+                        area, 
                     })
             })
     },
 
-    createMessage: messages => {
-        firebase.database().ref("Messages").push(messages)
-    },
+    // Funções para criar mensagens na tela de profissional ou grupos.
+    createMessage: messages => firebase.database().ref("Messages").push(messages),
+    createGroupMessage: (messages, way) => firebase.database().ref(`Grupos/${way}/Messages`).push(messages),
 
-    createGroupMessage: (messages, way) => {
-        firebase.database().ref(`Grupos/${way}/Messages`).push(messages)
-    },
-
+    // Função para pegar mensagens do banco.
     updateMessages: callback => {
         firebase.database()
             .ref("Messages")
@@ -38,6 +35,7 @@ const api = {
             })
     },
 
+    // Função para pegar mensagens do banco, na parte de grupos.
     updateGroupMessages: (callback, way) => {
         const theWay = way()
         firebase.database()

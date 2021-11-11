@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { Text, View, TextInput, Image, TouchableOpacity, ToastAndroid } from "react-native";
+import React, { useEffect, useState } from "react"
+import { Text, View, TextInput, Image, TouchableOpacity, ToastAndroid } from "react-native"
 
-import { useNavigation } from '@react-navigation/native';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import { useNavigation } from '@react-navigation/native'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 
 import firebase from '../../../Config/firebaseconfig'
 import styles from './styleProfile'
 
 export default function Profile() {
 
-    const { uid, photoURL } = firebase.auth().currentUser.providerData[0]
-    const navigation = useNavigation();
+    const navigation = useNavigation()
 
+    // Pegando id e foto do usuario atual.
+    const { uid, photoURL } = firebase.auth().currentUser.providerData[0]
+    
+    // Constantes para armazenar valores alterados.
     const [nameUser, setNameUser] = useState()
     const [ageUser, setAgeUser] = useState()
     const [isProf, setIsProf] = useState()
     const [area, setArea] = useState()
 
+    // Armazenando dados iniciais, a partir do banco.
     useEffect(() => {
-
         firebase.database()
             .ref(`Users/${uid}`)
             .once('value')
@@ -28,12 +31,11 @@ export default function Profile() {
                 setAgeUser(age)
                 setIsProf(isProf)
                 setArea(area)
-            });
-
+            })
     }, [])
 
+    // Função para atualizar os dados do usuário no banco.
     async function changeData(id, name, age, area, photoUrl) {
-
         await firebase.database()
             .ref(`Users/${id}`)
             .update({
@@ -45,9 +47,8 @@ export default function Profile() {
             .then(() => {
                 ToastAndroid.show("Dados alterados com sucesso!", ToastAndroid.SHORT)
                 navigation.navigate('Home')
-            });
-
-    };
+            })
+    }
 
     return (
         <View style={styles.container}>

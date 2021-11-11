@@ -14,9 +14,16 @@ const Stack = createStackNavigator();
 
 export default function App() {
 
+  // Ignorando logs
   useEffect(() => {
-    LogBox.ignoreLogs(['Setting a timer for a long period of time'])
-  }, [])
+    let isMounted = true
+
+    if (Platform.OS != "web" && isMounted == true) {
+      LogBox.ignoreAllLogs(true)
+      LogBox.ignoreLogs(['Setting a timer'])
+    }
+    return () => { isMounted = false }
+  })
 
   return (
     <NavigationContainer>

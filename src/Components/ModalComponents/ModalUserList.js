@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react"
+import { TouchableOpacity, Text, View, StyleSheet } from "react-native"
 import Modal from 'react-native-modal'
 import firebase from '../../Config/firebaseconfig'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 
 function ModalUserList({ open, onClose }) {
-
+    // Constante para armazenar lista de usuários.
     const [list, setList] = useState([])
 
+    // Função para pegar dados dos usuários no banco.
     async function fetchData() {
         await firebase.database()
             .ref('Users')
             .once('value')
             .then(snapshot => {
-                const data = Object.values(snapshot.val())
+                const data = Object.values(snapshot.val()) // Pegando todos os valores.
                 setList(data.map(({ name, isProf }, key) => {
-
                     return (
                         <View style={styles.contentUser} key={key}>
                             <Text style={styles.text}>{name}</Text>
-                            {isProf == "true"
+                            {isProf == "true" // validação para setar cor do botao: É profissional(verde), Não é(vermelho)
                                 ?
                                 <TouchableOpacity
                                     style={styles.iconButton}
@@ -57,23 +56,25 @@ function ModalUserList({ open, onClose }) {
                         </View>
                     )
                 }))
-
             })
     }
 
+    // Carrega a lista de usuários.
     useEffect(() => {
-        fetchData()
-        return () => { setList([]) }
+        let isMounted = true
+        if (isMounted) fetchData()
+        return () => { isMounted = false }
     }, [])
 
+    // Função chamada nos botões, que torna usuario profissional 
+    // ou torna apenas usuário comum.
     async function changeStatusProf(isProf, id) {
-
+        // Ao final do update, ele carrega novamente os usuarios do banco.
         await firebase.database()
             .ref(`Users/${id}`)
             .update({
                 isProf,
             }).then(fetchData())
-
     }
 
     return (

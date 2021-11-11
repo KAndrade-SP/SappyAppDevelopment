@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, ActivityIndicator } from 'react-native';
-import * as Font from 'expo-font';
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, ActivityIndicator } from 'react-native'
+import * as Font from 'expo-font'
 
 function TextCustom({ValueText, style}) {
 
@@ -19,8 +19,8 @@ function TextCustom({ValueText, style}) {
     async function requireFont() {
         await Font.loadAsync({
             'roboto-medium': require('../../assets/fonts/Roboto-Medium.ttf'),
-        });
-        setAssetsLoaded( true );
+        })
+        setAssetsLoaded( true )
     }
 
     useEffect(() => {

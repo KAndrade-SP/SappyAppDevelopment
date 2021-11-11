@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { TouchableOpacity, Text, View, StyleSheet, TextInput, ToastAndroid } from "react-native";
+import React, { useEffect, useState } from "react"
+import { TouchableOpacity, Text, View, StyleSheet, TextInput, ToastAndroid } from "react-native"
 import Modal from 'react-native-modal'
 import firebase from '../../Config/firebaseconfig'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
 function ModalDisableUser({ open, onClose }) {
+    const navigation = useNavigation()
 
+    // Constantes para armazenar senha do banco, e senhas digitadas.
     const [DBPass, setDBPass] = useState()
     const [firstPass, setFirstPass] = useState()
     const [secondPass, setSecondPass] = useState()
 
-    const navigation = useNavigation()
+    // Pegando id do usuário atual.
     const { uid } = firebase.auth().currentUser.providerData[0]
 
+    // Função para pegar senha do usuário atual, no banco.
     async function fetchData() {
         await firebase.database()
             .ref(`Users/${uid}`)
@@ -23,46 +26,45 @@ function ModalDisableUser({ open, onClose }) {
             })
     }
 
+    // Carrega a função fetchData, para setar a senha do banco.
     useEffect(() => {
-        fetchData()
-        return () => {
-            setFirstPass()
-            setSecondPass()
-        }
+        let isMounted = true
+        if(isMounted) fetchData()
+        return () => { isMounted = false }
     }, [])
 
-
+    // Função para retornar a tela de login. Usada quando o usuário desativar a conta.
     const signOutFirebase = async () => {
-
         await firebase.auth().signOut().then(() => {
-
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'Login' }],
             });
-
         })
+    }
 
-    };
-
+    // Função para desativar o usuário atual.
     async function disableUser() {
+        // Validando senhas digitadas com a do banco.
         const validInp = firstPass == secondPass ? true : false
         const validDB = firstPass == DBPass ? true : false
 
+        // Desativação é realizada quando a validação for satisfeita.
         if (validDB === true && validInp === true) {
+            // Pega o usuário atual.
             const { uid } = firebase.auth().currentUser.providerData[0]
+
+            // Remove dados do usuário atual, no banco.
             firebase.database().ref(`Users/${uid}`).remove()
+
+            // Remove login do usuário.
             firebase.auth().currentUser.delete().then(() => {
-                ToastAndroid.show("Sua conta foi desativada", ToastAndroid.LONG);
-
-            }).catch(function (error) {
-                console.error({ error })
+                ToastAndroid.show("Sua conta foi desativada", ToastAndroid.LONG)
             })
-
-            signOutFirebase()
-        } else {
-            ToastAndroid.show("As senhas não iguais", ToastAndroid.SHORT);
-        }
+            signOutFirebase() // Função para retornar a tela de login.
+        
+        } else ToastAndroid.show("As senhas não iguais", ToastAndroid.SHORT)
+        
 
     }
 

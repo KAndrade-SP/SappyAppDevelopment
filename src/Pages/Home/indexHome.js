@@ -1,21 +1,25 @@
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import React, { useEffect } from 'react';
-import { Dimensions, LogBox } from 'react-native';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import Header from '../../Components/Header';
-import SappyChat from '../SappyChat/Chat/Chat';
-import GroupChat from '../SappyChat/ChatGroup/GroupChat';
-import Setup from '../Setup/indexSetup';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import React, { useEffect } from 'react'
+import { Dimensions, LogBox } from 'react-native'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import Header from '../../Components/Header'
+import SappyChat from '../SappyChat/Chat/Chat'
+import GroupChat from '../SappyChat/ChatGroup/GroupChat'
+import Setup from '../Setup/indexSetup'
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default function Home() {
 
+  // Ignorando logs
   useEffect(() => {
-    if (Platform.OS != "web") {
+    let isMounted = true
+
+    if (Platform.OS != "web" && isMounted == true) {
       LogBox.ignoreAllLogs(true)
       LogBox.ignoreLogs(['Setting a timer'])
     }
+    return () => { isMounted = false }
   })
 
   return (
