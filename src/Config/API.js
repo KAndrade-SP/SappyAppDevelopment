@@ -3,7 +3,7 @@ import firebase from './firebaseconfig'
 const api = {
 
     // Função para criar usuário, com dados recebidos a tela de login.
-    createUser: async (email, id, name, photoUrl, area = '', isAdmin = 'false', isProf = 'false') => {
+    createUser: async (email, id, name, photoUrl, isAdmin = 'false', isProf = 'false', bio = '', medRating = '0', totalRating = '0', area = '') => {
         const dataBase = firebase.database().ref(`Users/${id}`)
         await dataBase.once('value')
             .then(snapshot => {
@@ -15,7 +15,12 @@ const api = {
                         photoUrl,
                         isAdmin,
                         isProf,
-                        area, 
+                        bio,
+                        dataProf: {
+                            area,
+                            medRating,
+                            totalRating
+                        }
                     })
             })
     },

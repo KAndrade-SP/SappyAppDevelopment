@@ -11,14 +11,13 @@ export default function Profile() {
 
     const navigation = useNavigation()
 
-    // Pegando id e foto do usuario atual.
-    const { uid, photoURL } = firebase.auth().currentUser.providerData[0]
+    // Pegando id do usuario atual.
+    const { uid } = firebase.auth().currentUser.providerData[0]
     
     // Constantes para armazenar valores alterados.
     const [nameUser, setNameUser] = useState()
-    const [ageUser, setAgeUser] = useState()
-    const [isProf, setIsProf] = useState()
-    const [area, setArea] = useState()
+    const [photoUrl, setPhotoURL] = useState()
+    const [bio, setBio] = useState()
 
     // Armazenando dados iniciais, a partir do banco.
     useEffect(() => {
@@ -26,23 +25,20 @@ export default function Profile() {
             .ref(`Users/${uid}`)
             .once('value')
             .then(snapshot => {
-                const { age, area, isProf, name } = snapshot.val()
+                const { name, bio, photoUrl } = snapshot.val()
                 setNameUser(name)
-                setAgeUser(age)
-                setIsProf(isProf)
-                setArea(area)
+                setBio(bio)
+                setPhotoURL(photoUrl)
             })
     }, [])
 
     // Função para atualizar os dados do usuário no banco.
-    async function changeData(id, name, age, area, photoUrl) {
+    async function changeData(id, name, bio) {
         await firebase.database()
             .ref(`Users/${id}`)
             .update({
                 name,
-                age,
-                area,
-                photoUrl
+                bio
             })
             .then(() => {
                 ToastAndroid.show("Dados alterados com sucesso!", ToastAndroid.SHORT)
@@ -55,7 +51,7 @@ export default function Profile() {
             <View style={styles.panel}>
                 <Image
                     style={styles.photo}
-                    source={{ uri: photoURL }}
+                    source={{ uri: photoUrl }}
                     resizeMode="stretch"
                 />
 
@@ -72,47 +68,27 @@ export default function Profile() {
                         />
                     </View>
                 </View>
-
+                
                 <View style={styles.contentView}>
                     <View style={styles.contentText}>
-                        <Text style={styles.text}>Idade:</Text>
+                        <Text style={styles.text}>Bio:</Text>
                     </View>
                     <View style={styles.contentInput}>
                         <TextInput
-                            onChangeText={a => setAgeUser(a)}
-                            maxLength={2}
-                            keyboardType={'numeric'}
-                            defaultValue={ageUser}
+                            onChangeText={a => setBio(a)}
+                            maxLength={45}
+                            autoCapitalize='none'
+                            defaultValue={bio}
                             style={styles.textInput}
                         />
                     </View>
                 </View>
-
-                {isProf == "true"
-                    ?
-                    <View style={styles.contentView}>
-                        <View style={styles.contentText}>
-                            <Text style={styles.text}>Área de atuação:</Text>
-                        </View>
-                        <View style={styles.contentInput}>
-                            <TextInput
-                                onChangeText={a => setArea(a)}
-                                maxLength={45}
-                                autoCapitalize='none'
-                                defaultValue={area}
-                                style={styles.textInput}
-                            />
-                        </View>
-                    </View>
-                    :
-                    <>
-                    </>
-                }
+                
             </View>
 
             <TouchableOpacity
                 style={styles.floatButton}
-                onPress={() => changeData(uid, nameUser, ageUser, area, photoURL)}
+                onPress={() => changeData(uid, nameUser, bio)}
             >
                 <SimpleLineIcons
                     name="pencil"

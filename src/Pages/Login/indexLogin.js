@@ -19,12 +19,12 @@ import api from '../../Config/API'
 
 export default function Login() {
 
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   // Verifica mudança de estado de usuario, se:
   // - user for verdadeiro, será direcionado para Home.
   useEffect(() => {
-    let isMounted = true;
+    let isMounted = true
 
     firebase.auth().onAuthStateChanged(user => {
       if (isMounted && user) {
@@ -33,7 +33,7 @@ export default function Login() {
           routes: [{ name: 'Home' }],
         })
 
-      } else navigation.navigate('Login');
+      } else navigation.navigate('Login')
     })
 
     return () => { isMounted = false }

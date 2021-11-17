@@ -4,12 +4,9 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { useNavigation } from '@react-navigation/native'
 
-import firebase from "../../Config/firebaseconfig"
+import firebase from '../../Config/firebaseconfig'
 
 import styles from './styleSetup'
-
-import ModalUserList from '../../Components/ModalComponents/ModalUserList'
-import ModalDisableUser from '../../Components/ModalComponents/ModalDisableUser'
 import ModalHelp from '../../Components/ModalComponents/ModalHelp'
 
 export default function Setup() {
@@ -27,32 +24,27 @@ export default function Setup() {
     }
 
     const { uid } = firebase.auth().currentUser.providerData[0] // Pegando id do usuário atual
-    const [validAdm, setValidAdm] = useState()
+    const [validAdm, setValidAdm] = useState() // setando estado administrador
 
     useEffect(() => {
-        let isMounted = true
         // Busca no banco para pegar estado de administrador do usuario atual.
         firebase.database()
             .ref(`Users/${uid}`)
             .once('value')
             .then(snapshot => {
                 const { isAdmin } = snapshot.val()
-                if (isAdmin != "false" && isMounted) setValidAdm(true)
+                setValidAdm(isAdmin)
             })
-        return () => { isMounted = false }
     }, [])
 
     // Constantes para abrir e fechar modais.
-    const [openList, setOpenList] = useState(false)
-    const [disable, setOpenDisable] = useState(false)
     const [help, setOpenHelp] = useState(false)
 
-    // Função para carregar tela de perfil.
+    // Função para carregar telas.
+    function goToUserList() { navigation.navigate('UserList') }
     function goToProfile() { navigation.navigate('Profile') }
     
     // Funções para abrir e fechar modais
-    function goToUserList() { setOpenList(!openList) }
-    function goToDisableUser() { setOpenDisable(!disable) }
     function goToHelp() { setOpenHelp(!help) }
 
     return (
@@ -60,8 +52,6 @@ export default function Setup() {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}
         >
-            <ModalUserList open={openList} onClose={() => setOpenList(false)} />
-            <ModalDisableUser open={disable} onClose={() => setOpenDisable(false)} />
             <ModalHelp open={help} onClose={() => setOpenHelp(false)} />
 
             <View
@@ -83,23 +73,7 @@ export default function Setup() {
                     </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.contentOptions}
-                    onPress={() => goToDisableUser()}
-                >
-                    <SimpleLineIcons
-                        style={styles.iconMod}
-                        name="user-unfollow"
-                        color={'#ccad00'}
-                        size={22}
-                    />
-                    <Text
-                        style={styles.textOptions}
-                    >Desativar conta
-                    </Text>
-                </TouchableOpacity>
-
-                {validAdm != false ? <TouchableOpacity
+                {validAdm == "true" ? <TouchableOpacity
                     style={styles.contentOptions}
                     onPress={() => goToUserList()}
                 >
@@ -113,7 +87,7 @@ export default function Setup() {
                         style={styles.textOptions}
                     >Tornar Profissional
                     </Text>
-                </TouchableOpacity> : console.log('')}
+                </TouchableOpacity> : <></>}
 
                 <TouchableOpacity
                     style={styles.contentOptions}

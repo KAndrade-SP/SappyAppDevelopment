@@ -18,13 +18,13 @@ export default function SappyChat() {
             .once('value')
             .then(snapshot => {
                 const data = Object.values(snapshot.val()) // Pegando todos os dados.
-                setCardData(data.map(({ name, email, area, isProf, photoUrl }, key) => {
+                setCardData(data.map(({ name, email, isProf, photoUrl, dataProf }, key) => {
 
                     // Setar cardChat com os valores, caso a validação for verdadeira. 
                     if (data[key].email != current_user && isProf == "true") {
                         return <CardChat
                             key={key} Title={name}
-                            Desc={area}
+                            Desc={dataProf.area}
                             ImageAvatar={photoUrl}
                             Identify={email}
                         /> }
