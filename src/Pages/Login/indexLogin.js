@@ -8,6 +8,7 @@ import {
 
 import * as Google from 'expo-google-app-auth'
 import { useNavigation } from '@react-navigation/native'
+import * as Animatable from 'react-native-animatable';
 
 import styles from './styleLogin'
 import firebase from "../../Config/firebaseconfig"
@@ -112,7 +113,15 @@ export default function Login() {
       </WavyHeader>
 
       <View style={styles.headerContainer}>
-        <Image style={styles.image} source={WhiteLogo800x800}></Image>
+        <Animatable.Image 
+          animation="pulse" 
+          useNativeDriver            
+          iterationCount="infinite"
+          easing="ease-out"
+          style={styles.image} 
+          source={WhiteLogo800x800}
+        />
+          
 
         <TouchableOpacity
           style={styles.googleBtn}

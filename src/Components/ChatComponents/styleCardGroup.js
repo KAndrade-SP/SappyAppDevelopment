@@ -75,6 +75,27 @@ const styles = StyleSheet.create({
         marginLeft: 12
     },
 
+    editButton: {
+        width: 80,
+        height: 36,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "#ccad00",
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        borderTopRightRadius: 15,
+        borderTopLeftRadius: 4,
+        marginLeft: 18
+    },
+
+    groupOptions:{
+        width: 304,            
+        position: 'absolute',
+        marginTop: 100,                        
+        flexDirection: 'row',
+        opacity:0
+    },
+
     text: {
         fontSize: 12,
         color: '#f5f5f5'
