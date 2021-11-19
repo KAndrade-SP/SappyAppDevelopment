@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import CardChat from '../../../Components/ChatComponents/CardChat'
 import firebase from '../../../Config/firebaseconfig.js'
 
@@ -67,8 +67,10 @@ export default function SappyChat() {
 
     return (
         <ScrollView style={{ flex: 1, backgroundColor: "#000710" }}>
-            {cardData}
-            {cardData2}
+            <View style={{ marginBottom: 12 }}>
+                {cardData}
+                {cardData2}
+            </View>
         </ScrollView>
     )
 }

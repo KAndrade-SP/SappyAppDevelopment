@@ -28,9 +28,9 @@ export default function Home() {
         inactiveColor="#f5f5f5"
         barStyle={{
           backgroundColor: "#000710",
-          position: 'absolute',
           borderTopWidth: 0.5,
           borderTopColor: "#ffffff",
+
           width: Dimensions.get('window').width,
           height: 54,
           zIndex: 9

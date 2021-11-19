@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import CardGroup from '../../../Components/ChatComponents/CardGroup'
 import firebase from '../../../Config/firebaseconfig.js'
 
@@ -30,8 +30,10 @@ export default function ChatGroup() {
     })
 
     return (
-        <ScrollView style={{ flex: 1, backgroundColor: "#000710" }}>
-            {cardData}
+        <ScrollView style={{ flex: 1, backgroundColor: "#000710"}}>
+            <View style={{ marginBottom: 12 }}>
+                {cardData}
+            </View>
         </ScrollView>
     )
 }
