@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     spaceChat: {
         flex: 1,
         paddingRight: 8,
-        paddingLeft: 8,   
+        paddingLeft: 8,
     },
 
     cardChat: {
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: 4,
-        paddingLeft: 12
+        paddingLeft: 12,
     },
 
     divValuesChat: {
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 
     divNameDesc: {
         marginLeft: 12,
-    },  
+    },
 
     chatName: {
         fontSize: 16,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#f5f5f580',
         fontStyle: 'italic'
-    }, 
+    },
 
     containerIcons: {
         flexDirection: 'row',

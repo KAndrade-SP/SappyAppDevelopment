@@ -1,139 +1,136 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 
-import { View,
-         TouchableOpacity,
-         Image,
-        } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native'
 
-import * as Google from 'expo-google-app-auth';
-import { useNavigation } from '@react-navigation/native';
+import * as Google from 'expo-google-app-auth'
+import { useNavigation } from '@react-navigation/native'
+import * as Animatable from 'react-native-animatable';
 
 import styles from './styleLogin'
 import firebase from "../../Config/firebaseconfig"
 import GoogleLogo from '../../../assets/sourceIcons/google_signin_buttons/GoogleLogo.svg'
 import WhiteLogo800x800 from '../../../assets/logos/WhiteLogo800x800.png'
-import {TextCustom} from '../../Components/CustomText'
-import WavyHeader from '../../Components/WavyHeader';
+import { TextCustom } from '../../Components/CustomText'
+import WavyHeader from '../../Components/WavyHeader'
 import api from '../../Config/API'
 
-export default function Login(){
+export default function Login() {
 
-    const navigation = useNavigation();
+  const navigation = useNavigation()
 
-    //Função que verificar se o usuário já está logado no firebase
-    function isUserEqual(googleUser, firebaseUser) {
-      if (firebaseUser) {
-        const providerData = firebaseUser.providerData;
+  // Verifica mudança de estado de usuario, se:
+  // - user for verdadeiro, será direcionado para Home.
+  useEffect(() => {
+    let isMounted = true
 
-        for (const i = 0; i < providerData.length; i++) {
-          
-          if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
-              providerData[i].uid === googleUser.getBasicProfile().getId()) {
-              // We don't need to reauth the Firebase connection.
-              return true;
-          };
-        };
-      };
-      return false;
-    };
+    firebase.auth().onAuthStateChanged(user => {
+      if (isMounted && user) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Home' }],
+        })
 
-    //Função que troca a resposta da autenticação por uma credencial do Google
-    function onSignIn(googleUser) {
-      const {email, id, name, photoUrl} = googleUser.user
-      console.log(photoUrl)
-      api.createUser(email, id, name, photoUrl)
+      } else navigation.navigate('Login')
+    })
 
-      // We need to register an Observer on Firebase Auth to make sure auth is initialized.
-      const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
-        unsubscribe();
-        // Check if we are already signed-in Firebase with the correct user.
-        if (!isUserEqual(googleUser, firebaseUser)) {
-          // Build Firebase credential with the Google ID token.
-          const credential = firebase.auth.GoogleAuthProvider.credential(
-              googleUser.idToken,
-              googleUser.accessToken
-          );   
-          
-          // Sign in with credential from the Google user.
-          firebase.auth().signInWithCredential(credential)
-          .then(() => {
-              console.log('Usuário logado pelo Google');
-          })
-          .catch((error) => {
-              // Handle Errors here.
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              // The email of the user's account used.
-              const email = error.email;
-              // The firebase.auth.AuthCredential type that was used.
-              const credential = error.credential;
-              // ...
-          });
-        } else {
-            console.log('User already signed-in Firebase.');
+    return () => { isMounted = false }
+  }, [])
+
+  // Função que verificar se o usuário já está logado no firebase.
+  function isUserEqual(googleUser, firebaseUser) {
+    if (firebaseUser) {
+      const providerData = firebaseUser.providerData;
+      for (const i = 0; i < providerData.length; i++) {
+
+        if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
+          providerData[i].uid === googleUser.getBasicProfile().getId()) {
+          // Nós não precisamos reautenticar no firebase.
+          return true
         }
-      });
-    };
-    
-    async function signInWithGoogleAsync() {
-      try {
-        const result = await Google.logInAsync({
-            androidClientId: '74520676936-ki3s1tplmui4bjbi9drntngm1fat7fvo.apps.googleusercontent.com',
-            iosClientId: '74520676936-c7j9p5b3vrrhss5pj85bj01mcnbdn2m6.apps.googleusercontent.com',
-            scopes: ['profile', 'email'],
-        });
-    
-        if (result.type === 'success') {
-            onSignIn(result);
-            return result.accessToken;
-        } else {
-            return { cancelled: true };
-        }
-      } catch (e) {
-          return { error: true };
       }
     }
+    return false
+  }
 
-    useEffect(() => {  
-        firebase.auth().onAuthStateChanged((user) => {  
-            if (user) {
-                navigation.reset({
-                    index: 0,
-                    routes: [{name: 'Home'}],
-                });
-                console.log('logado, será redirecionado para a Home');
-            } else {
-                navigation.navigate('Login');
-                console.log('deslogado, retornado para a tela de login');
-            }   
-          }); 
+  // Função que troca a resposta da autenticação por uma credencial do Google.
+  function onSignIn(googleUser) {
 
-          return () => {}
-    }, []);
+    // Pegando dados do usuário para inserir na função de criar usuário no banco.
+    const { email, id, name, photoUrl } = googleUser.user
+    api.createUser(email, id, name, photoUrl)
 
-    return( 
-        <View style={styles.container}>
-          <WavyHeader
-          customStyles={styles.svgCurve}
-          customHeight={300}
-          customTop={130}
-          customBgColor='#ccad00'
-          customWavePattern="M0,224L60,202.7C120,181,240,139,360,138.7C480,139,600,181,720,218.7C840,256,960,288,1080,277.3C1200,267,1320,213,1380,186.7L1440,160L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"        
-          >
-              
-          </WavyHeader>
+    // É definido um escutador para garantir a inicialização da autenticação.
+    const unsubscribe = firebase.auth().onAuthStateChanged(firebaseUser => {
+      
+      // Verifica se o usuário logado com o firebase é o usuário correto.
+      if (!isUserEqual(googleUser, firebaseUser)) {
+        // Cria uma credencial para o usuário com o Google ID Token.
+        const credential = firebase.auth.GoogleAuthProvider.credential(
+          googleUser.idToken,
+          googleUser.accessToken
+        )
+        // Loga com a credencial do usuário do Google.
+        firebase.auth().signInWithCredential(credential)
+      }
+    })
+    unsubscribe() // chamando função
 
-          <View style={styles.headerContainer}>
-              <Image style={styles.image} source={WhiteLogo800x800}></Image>
-              
-              <TouchableOpacity
-                  style={styles.googleBtn} 
-                  onPress={() => signInWithGoogleAsync()}
-              >
-                  <Image style={styles.logoStyle} source={GoogleLogo}/>
-                  <TextCustom style={styles.textGoogleBtn} ValueText='Continuar com Google' />
-              </TouchableOpacity>
-          </View>            
-        </View>   
-    );
+  };
+
+  // Função que prepara os dados a função de login.
+  async function signInWithGoogleAsync() {
+    try {
+      const result = await Google.logInAsync({
+        androidClientId: '74520676936-ki3s1tplmui4bjbi9drntngm1fat7fvo.apps.googleusercontent.com',
+        iosClientId: '74520676936-c7j9p5b3vrrhss5pj85bj01mcnbdn2m6.apps.googleusercontent.com',
+        scopes: ['profile', 'email'],
+      })
+
+      // Se tiver sucesso na busca dos dados, é chamado a função de login.
+      if (result.type === 'success') {
+        onSignIn(result)
+        return result.accessToken
+
+      } else return { cancelled: true }
+    
+    } catch (e) {return { error: true }}
+  }
+
+  return (
+    <View style={styles.container}>
+      <WavyHeader
+        customStyles={styles.svgCurve}
+        customHeight={300}
+        customTop={130}
+        customBgColor='#ccad00'
+        customWavePattern="M0,224L60,202.7C120,181,240,139,360,138.7C480,139,600,181,720,218.7C840,256,960,288,1080,277.3C1200,267,1320,213,1380,186.7L1440,160L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
+      >
+
+      </WavyHeader>
+
+      <View style={styles.headerContainer}>
+        <Animatable.Image 
+          animation="pulse" 
+          useNativeDriver            
+          iterationCount="infinite"
+          easing="ease-out"
+          style={styles.image} 
+          source={WhiteLogo800x800}
+        />
+          
+
+        <TouchableOpacity
+          style={styles.googleBtn}
+          onPress={() => signInWithGoogleAsync()}
+        >
+          <Image style={styles.logoStyle} source={GoogleLogo} />
+          <TextCustom style={styles.textGoogleBtn} ValueText='Continuar com Google' />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 };

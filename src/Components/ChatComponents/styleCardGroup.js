@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     spaceGroup: {
         flex: 1,
         paddingRight: 8,
-        paddingLeft: 8, 
+        paddingLeft: 8,
     },
 
     cardGroup: {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 70,
         marginTop: 4,
-        paddingLeft: 12
+        paddingLeft: 12,
     },
 
     divValuesGroup: {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
     divNameDesc: {
         marginLeft: 12
-    }, 
+    },
 
     groupName: {
         fontSize: 16,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#f5f5f580',
         fontStyle: 'italic'
-    }, 
+    },
 
     containerButton: {
         flex: 1,
@@ -73,6 +73,27 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 15,
         borderTopLeftRadius: 4,
         marginLeft: 12
+    },
+
+    editButton: {
+        width: 80,
+        height: 36,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "#ccad00",
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        borderTopRightRadius: 15,
+        borderTopLeftRadius: 4,
+        marginLeft: 18
+    },
+
+    groupOptions:{
+        width: 304,            
+        position: 'absolute',
+        marginTop: 100,                        
+        flexDirection: 'row',
+        opacity:0
     },
 
     text: {

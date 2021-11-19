@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, Image, TouchableOpacity, LogBox } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import ModalUserImage from '../ModalComponents/ModalUserImage';
 
 import styles from './styleCardChat'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
@@ -15,10 +16,16 @@ export default function CardChat({Title, Desc, ImageAvatar, Identify}){
     });
 
     const navigator = useNavigation()
+    const [openImage, setOpenImage] = useState(false)
 
     function ChatSappy(){
         navigator.navigate('ChatSappy',{nome: Title, identify: Identify})
     }
+
+    function pressImage(){
+       setOpenImage(!openImage) 
+    }
+
 
     return(
         <View style={styles.container}>
@@ -26,7 +33,9 @@ export default function CardChat({Title, Desc, ImageAvatar, Identify}){
                 <View style={styles.spaceChat}>
                     <View style={styles.cardChat}>
                         <View style={styles.divValuesChat}>
-                            <Image source={{uri: ImageAvatar}} style={styles.imageChat} />
+                            <TouchableOpacity onPress={ () => {pressImage()}}>
+                                <Image source={{uri: ImageAvatar}} style={styles.imageChat} />
+                            </TouchableOpacity>
                             <View style={styles.divNameDesc}>
                                 <Text style={styles.chatName}>{Title}</Text>
                                 <Text style={styles.chatDescription}>{Desc}</Text>
@@ -55,6 +64,14 @@ export default function CardChat({Title, Desc, ImageAvatar, Identify}){
                     </View>
                 </View>
             </TouchableOpacity>
+            <ModalUserImage 
+                open={openImage} 
+                onClose={() => 
+                    setOpenImage(false)} 
+                ImageAvatar={ImageAvatar} 
+                Title={Title}
+                Desc={Desc}
+            />
         </View>
     );
 }

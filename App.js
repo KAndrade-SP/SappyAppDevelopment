@@ -1,22 +1,30 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import React, { useEffect } from 'react';
-import { LogBox } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import React, { useEffect } from 'react'
+import { LogBox } from 'react-native'
 
-import Home from './src/Pages/Home/indexHome';
-import Login from './src/Pages/Login/indexLogin';
-import ChatSappy from './src/Pages/SappyChat/Chat/indexChat';
-import ChatGroup from './src/Pages/SappyChat/ChatGroup/indexGroupChat';
-import Setup from './src/Pages/Setup/indexSetup';
-import Profile from './src/Pages/Setup/Profile/Profile';
+import Home from './src/Pages/Home/indexHome'
+import Login from './src/Pages/Login/indexLogin'
+import ChatSappy from './src/Pages/SappyChat/Chat/indexChat'
+import ChatGroup from './src/Pages/SappyChat/ChatGroup/indexGroupChat'
+import Setup from './src/Pages/Setup/indexSetup'
+import Profile from './src/Pages/Setup/Profile/Profile'
+import UserList from './src/Pages/Setup/UserList/UserList'
 
 const Stack = createStackNavigator();
 
 export default function App() {
 
+  // Ignorando logs
   useEffect(() => {
-    LogBox.ignoreLogs(['Setting a timer for a long period of time'])
-  }, [])
+    let isMounted = true
+
+    if (Platform.OS != "web" && isMounted == true) {
+      LogBox.ignoreAllLogs(true)
+      LogBox.ignoreLogs(['Setting a timer'])
+    }
+    return () => { isMounted = false }
+  })
 
   return (
     <NavigationContainer>
@@ -89,6 +97,26 @@ export default function App() {
               height: 90,
             },
             headerTitle: "Editar perfil",
+            headerTintColor: '#f5f5f5',
+            headerTitleStyle: {
+              paddingLeft: 10,
+              paddingRight: 10,
+              paddingBottom: 4,
+              flexWrap: 'nowrap'
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="UserList"
+          component={UserList}
+          options={{
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#000710',
+              height: 90,
+            },
+            headerTitle: "Lista de usuários",
             headerTintColor: '#f5f5f5',
             headerTitleStyle: {
               paddingLeft: 10,

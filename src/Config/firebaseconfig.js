@@ -1,5 +1,5 @@
-import firebase from 'firebase';
-import "firebase/storage";
+import firebase from 'firebase'
+import "firebase/storage"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBcFDfD9_Ii6WMmvCFG_IMzEeS9yNkIoRo",
@@ -9,7 +9,7 @@ const firebaseConfig = {
   storageBucket: "professionalchat-65cfc.appspot.com",
   messagingSenderId: "74520676936",
   appId: "1:74520676936:web:3713d6c6bc01da517d267d"
-};
+}
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
