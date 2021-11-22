@@ -1,125 +1,157 @@
 import React from "react"
-import { TouchableOpacity, Text, View, StyleSheet } from "react-native"
+import { Text, View, StyleSheet, ScrollView } from "react-native"
 import Modal from 'react-native-modal'
 
 function ModalHelp({ open, onClose }) {
 
     return (
-        <View style={styles.container}>
+        <View>
             <Modal
                 isVisible={open}
                 onBackButtonPress={onClose}
+                onBackdropPress={onClose}
                 animationIn={"bounceInUp"}
                 animationOut={"bounceOutDown"}
                 animationOutTiming={800}
                 animationInTiming={800}
                 backdropOpacity={0}
-                style={styles.containerModal}
+                style={{ alignItems: 'center' }}
             >
-                <Text style={styles.titleText}>COMO USAR</Text>
+                <View style={styles.viewModal}>
+                    <ScrollView>
+                        <View style={styles.containerText}>
+                            <Text style={styles.titleText}>Grupos</Text>
+                            <Text style={styles.descText}>
+                                Um espaço para conhecer pessoas com situações iguais ou semelhantes.
+                                {'\n'}Essa área é monitorada por moderadores que estarão aptos a tomar alguma 
+                                atitude, caso necessária.
+                                {'\n'}Basta escolher um grupo desejado, logo em seguida acessar e enviar mensagens.
+                            </Text>
+                        </View> 
 
-                <Text style={styles.normalText}>
-                    O Naruto pode ser um pouco duro às vezes,
-                    talvez você não saiba disso, mas o Naruto também cresceu sem pai.
-                    Na verdade ele nunca conheceu nenhum de seus pais,
-                    e nunca teve nenhum amigo em nossa aldeia.
-                    Mesmo assim eu nunca vi ele chorar, ficar zangado ou se dar por vencido,
-                    ele está sempre disposto a melhorar, ele quer ser respeitado,
-                    é o sonho dele e o Naruto daria a vida por isso sem hesitar.
-                    Meu palpite é que ele se cansou de chorar e
-                    decidiu fazer alguma coisa a respeito!
-                </Text>
+                        <View style={styles.containerText}>
+                            <Text style={styles.titleText}>Profissionais</Text>
+                            <Text style={styles.descText}>
+                                Um espaço para conversar com pessoas especializadas no assunto, que poderão 
+                                ajudá-lo(a) de forma semelhante a de uma consulta real.
+                                {'\n'}Clique em um profissional para enviar mensagens.
+                            </Text>
+                        </View> 
 
-                <Text style={styles.titleText}>CONTATO</Text>
+                        <View style={styles.containerText}>
+                            <Text style={styles.titleText}>Configurações</Text>
+                            <Text style={styles.descText}>
+                                Nesta área, você poderá alterar dados básicos do perfil e checar informações 
+                                para contato, além de poder realizar o logoff do aplicativo.
+                            </Text>
+                        </View> 
 
-                <Text style={styles.footerTitle}>E-mail:
-                    <Text style={styles.footerText}>
-                        ⠀Safety2dsntcc@gmail.com
-                    </Text>
-                </Text>
+                        <View style={styles.containerText}>
+                            <Text style={styles.titleText}>Como se tornar um profissional?</Text>
+                            <Text style={styles.descText}>
+                                Será necessário comprovar sua profissão através de CRM, RG, CPF, Diplomas/Certificados e 
+                                detalhes de experiência de trabalho. 
+                                {'\n'}Cheque as informações de contato e envie um e-mail com os documentos requisitados
+                                para realizar a solicitação, assim que possível retornaremos com uma resposta.
+                            </Text>
+                        </View> 
 
-                <Text style={styles.footerTitle}>Telefone:
-                    <Text style={styles.footerText}>
-                        ⠀11 96813-9649
-                    </Text>
-                </Text>
+                        <View style={styles.containerText}>
+                            <Text style={styles.titleText}>Um profissional responderá rapidamente?</Text>
+                            <Text style={styles.descText}>
+                                A ideia é que todos nossos colaboradores consigam responder um chamado rapidamente, 
+                                mas aconselhamos que caso um profissional não o atenda no tempo esperado envie 
+                                mensagem para outros que poderão estar disponíveis.
+                            </Text>
+                        </View> 
 
-                <Text style={styles.footerTitle}>Endereço: 
-                    <Text style={styles.footerText}>
-                        ⠀Santo Eduardo - Embu das Artes
-                    </Text>
-                </Text>
-                
-                <Text style={styles.footerTitle}>Autor:
-                    <Text style={styles.footerText}>
-                        ⠀Nobru apelo
-                    </Text>
-                </Text> 
+                        <View style={styles.containerText}>
+                            <Text style={styles.titleText}>Como os grupos são criados?</Text>
+                            <Text style={styles.descText}>
+                                Todos os grupos são criados e gerenciados somente pelos administradores do aplicativo 
+                                que possuem acesso privilegiado a determinadas funcionalidades do aplicativo.
+                            </Text>
+                        </View> 
 
-                <View style={styles.containerButton}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={onClose}
-                >
-                    <Text style={styles.normalText}>Fechar</Text>
-                </TouchableOpacity>
-                </View>
+                        <View style={styles.containerText}>
+                            <Text style={styles.titleText}>Nível de segurança</Text>
+                            <Text style={styles.descText}>
+                                Os profissionais e administradores do aplicativo estarão sempre dispostos a combater 
+                                alguma atitude indevida percebida em algum grupo, em versões futuras a segurança será 
+                                mais aprimorada para garantir um espaço ainda mais confortável e seguro.
+                            </Text>
+                        </View> 
+
+                        <View style={styles.containerText}>
+                            <Text style={styles.titleText}>Denúncias</Text>
+                            <Text style={styles.descText}>
+                                Caso perceba alguma atitude indevida vinda de um profissional colaborador, clique 
+                                no ícone de perfil do mesmo e em seguida no ícone de denúncias para reportar esse profissional.
+                            </Text>
+                        </View>
+
+                        <View style={styles.lastContainerText}>
+                            <Text style={styles.titleText}>Informações de profissionais</Text>
+                            <Text style={styles.descText}>
+                                Caso queira checar informações detalhadas de um profissional, clique no ícone de perfil 
+                                do mesmo e em seguida no ícone de informações para ver os detalhes deste profissional.
+                            </Text>
+                        </View>
+                    </ScrollView>
+                </View>          
             </Modal>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { position: 'absolute' },
 
-    containerModal: {
-        width: "90%",
-        borderRadius: 20,
-        backgroundColor: '#212121',
-        paddingStart: 12,
-        paddingEnd: 12,
-    },
-
-    containerButton: {
+    viewModal: {
         alignItems: 'center',
-        paddingTop: 25,
+        justifyContent: 'center',
+        paddingTop: 6,
+        paddingBottom: 4,
+        height: 400, 
+        width: 300,
+        backgroundColor:'#212121',
+        borderRadius: 10,   
+        flexDirection: 'column',
     },
 
-    button: {
-        backgroundColor: '#00c85330',
-        borderRadius: 10,
-        paddingTop: 5,
-        paddingLeft: 30,
-        paddingRight: 30,
-        alignItems: 'center'
+    containerText: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 8,
+        marginBottom: 6,
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#f5f5f580'
     },
 
-    footerText: {
-        color: '#f5f5f5',
-        fontSize: 14,
-        fontWeight: 'normal',
-    },
-
-    footerTitle: {
-        color: '#f5f5f5',
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 2,
+    lastContainerText: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 8,
     },
 
     titleText: {
-        color: '#f5f5f5',
+        marginLeft: 12,
+        marginRight: 12,
+        color: "#f5f5f5",
         fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        textAlign: 'center'
+        textAlign: 'center',
     },
 
-    normalText: {
-        color: '#f5f5f5',
-        fontSize: 14,
-        marginBottom: 10,
-        textAlign: 'justify'
+    descText: {
+        marginLeft: 12,
+        marginRight: 12,
+        marginTop: 2,
+        marginBottom: 2,
+        color: "#f5f5f580",
+        fontSize: 12,
+        textAlign: 'center',
+        lineHeight: 18
     },
 
 })

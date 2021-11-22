@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
     groupDescription: {
         fontSize: 12,
         color: '#f5f5f580',
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        marginTop: 2
     },
 
     containerButton: {
@@ -89,17 +90,34 @@ const styles = StyleSheet.create({
     },
 
     groupOptions:{
-        width: 304,            
+        width: '100%',           
         position: 'absolute',
-        marginTop: 100,                        
+        marginTop: 68,                      
         flexDirection: 'row',
-        opacity:0
+        justifyContent: 'space-between',
+        opacity: 0
     },
 
     text: {
         fontSize: 12,
         color: '#f5f5f5'
-    }
+    },
+
+    contentOptions: {
+        flexDirection: "row",
+        paddingTop: 8,
+        justifyContent: 'center',
+        paddingLeft: 12,
+        marginBottom: 8,
+    },
+
+    containerIcon: {
+        justifyContent: 'center'
+    },
+
+    iconMod: {
+        marginTop: 6,
+    },
 
 });
 

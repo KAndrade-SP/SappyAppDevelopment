@@ -41,33 +41,13 @@ export default function CardChat({Title, Desc, ImageAvatar, Identify}){
                                 <Text style={styles.chatDescription}>{Desc}</Text>
                             </View>
                         </View>
-                        <View style={styles.containerIcons}>
-                            <TouchableOpacity
-                                style={styles.iconButton}
-                            >
-                                <SimpleLineIcons
-                                    name="info"
-                                    color={'#ccad00'}
-                                    size={22}
-                                />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.iconButton}
-                            >
-                                <SimpleLineIcons
-                                    name="flag"
-                                    color={'#ccad00'}
-                                    size={22}
-                                />
-                            </TouchableOpacity>
-                        </View>  
                     </View>
                 </View>
             </TouchableOpacity>
             <ModalUserImage 
                 open={openImage} 
                 onClose={() => 
-                    setOpenImage(false)} 
+                setOpenImage(false)} 
                 ImageAvatar={ImageAvatar} 
                 Title={Title}
                 Desc={Desc}

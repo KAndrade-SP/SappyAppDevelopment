@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
 
-    container:{
+    container: {
         flex: 1,
         backgroundColor: '#000710',
         paddingTop: 8,
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         paddingStart: 8, 
     },
 
-    options:{
+    options: {
         width: "100%",
         flexDirection: 'column',
         alignItems: 'flex-start',
@@ -21,11 +21,7 @@ const styles = StyleSheet.create({
         paddingBottom: 8,
     },
 
-    iconMod: {
-        marginTop: 6
-    },
-
-    contentOptions:{
+    contentOptions: {
         flexDirection: "row",
         paddingTop: 8,
         justifyContent: 'center',
@@ -33,11 +29,32 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
 
-    textOptions:{
+    containerIcon: {
+        justifyContent: 'center'
+    },
+
+    iconMod: {
+        marginTop: 6,
+    },
+
+    containerText: {
+        flex: 1,
+        justifyContent: 'center',
+        marginLeft: 4
+    },
+
+    textOptions: {
         marginLeft: 12,
         marginTop: 6,
-        color: "#ffffff",
-        fontSize: 16
+        color: "#f5f5f5",
+        fontSize: 16,
+    },
+
+    descOptions: {
+        marginLeft: 12,
+        marginTop: 6,
+        color: "#f5f5f580",
+        fontSize: 12,
     }
 
 });

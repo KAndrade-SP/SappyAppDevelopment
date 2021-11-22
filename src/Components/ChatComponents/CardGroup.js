@@ -1,19 +1,22 @@
 import React, {useState, useRef} from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { Image, Modal, Text, Touchable, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import styles from './styleCardGroup'
-import * as Animatable from 'react-native-animatable';
-import ModalGroupImage from '../ModalComponents/ModalGroupImage';
+import * as Animatable from 'react-native-animatable'
+import ModalGroupImage from '../ModalComponents/ModalGroupImage'
 
 export default function CardGroup({ Title, Desc, ImageGp }) {
     const navigator = useNavigation()    
 
     // Constante que armazena a  referência da View do CardChat
-    const cardRef = useRef();
-    const optionsRef = useRef();
+    const cardRef = useRef()
+    const optionsRef = useRef()
     
-    const [cardState, setCardState] = useState(false);
-    const [openImage, setOpenImage] = useState(false);
+    const [cardState, setCardState] = useState(false)
+    const [openImage, setOpenImage] = useState(false)
+
+    let deviceWidth = Dimensions.get('window').width
 
     // Função que redireciona para a tela de Grupos.
     function chatGroup() { navigator.navigate('ChatGroup', { title: Title }) }
@@ -26,7 +29,7 @@ export default function CardGroup({ Title, Desc, ImageGp }) {
     //Função que exibe informações adicionais
     function showGroupInfo(){
         if (cardState == 0){
-            cardRef.current.transitionTo({height: 150, paddingBottom: 80});
+            cardRef.current.transitionTo({height: 120, paddingBottom: 50});
             optionsRef.current.transitionTo({opacity: 1})
             setCardState(1)
         }else{
@@ -40,14 +43,17 @@ export default function CardGroup({ Title, Desc, ImageGp }) {
         <View style={styles.container}>
             <TouchableOpacity onPress={() => showGroupInfo()}>
                 <View style={styles.spaceGroup}>
-
                     <Animatable.View style={styles.cardGroup} ref={cardRef}>
                         <View style={styles.divValuesGroup}>
                             <TouchableOpacity onPress={ () => {pressImage()}}>
                                 <Image source={{ uri: ImageGp }} style={styles.imageGroup} />
                             </TouchableOpacity>
                             <View style={styles.divNameDesc}>
-                                <Text style={styles.groupName}>{Title}</Text>
+                                <Text 
+                                    numberOfLines={1}
+                                    style={styles.groupName}
+                                >{deviceWidth > 360 ? `${Title}` : `${Title.substring(0, 18)}...`}
+                                </Text>
                                 <Text style={styles.groupDescription}>{Desc}</Text>
                             </View>
                             
@@ -62,19 +68,40 @@ export default function CardGroup({ Title, Desc, ImageGp }) {
                         </View>                        
                         <Animatable.View style={styles.groupOptions} ref={optionsRef}>
                             <TouchableOpacity
-                                style={styles.editButton}                                    
+                                style={styles.contentOptions}
                             >
-                                <Text style={styles.text}>Excluir</Text>
+                                <View style={styles.containerIcon}>
+                                    <SimpleLineIcons
+                                        style={styles.iconMod}
+                                        name="close"
+                                        color={'#ccad00'}
+                                        size={22}
+                                    />
+                                </View>         
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={styles.editButton}                                    
+                                style={styles.contentOptions}
                             >
-                                <Text style={styles.text}>Editar</Text>
+                                <View style={styles.containerIcon}>
+                                    <SimpleLineIcons
+                                        style={styles.iconMod}
+                                        name="pencil"
+                                        color={'#ccad00'}
+                                        size={22}
+                                    />
+                                </View>         
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={styles.editButton}                                    
+                                style={styles.contentOptions}
                             >
-                                <Text style={styles.text}>Reportar</Text>
+                                <View style={styles.containerIcon}>
+                                    <SimpleLineIcons
+                                        style={styles.iconMod}
+                                        name="flag"
+                                        color={'#ccad00'}
+                                        size={22}
+                                    />
+                                </View>         
                             </TouchableOpacity>
                         </Animatable.View>                                                                        
                     </Animatable.View>

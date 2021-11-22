@@ -56,16 +56,8 @@ const styles = StyleSheet.create({
     chatDescription: {
         fontSize: 12,
         color: '#f5f5f580',
-        fontStyle: 'italic'
-    },
-
-    containerIcons: {
-        flexDirection: 'row',
-    },
-
-    iconButton: {
-        alignItems: 'flex-end',
-        marginRight: 12,
+        fontStyle: 'italic',
+        marginTop: 2,
     },
 
 });

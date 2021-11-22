@@ -11,6 +11,7 @@ function ModalGroupImage({open, onClose, ImageGp, Title}){
             <Modal isVisible = {open} animationIn='fadeIn' 
                 animationOut='fadeOut' 
                 onBackdropPress={onClose}  
+                onBackButtonPress={onClose}
                 style={{alignItems:'center'}}
                 backdropOpacity={0}              
             >                 

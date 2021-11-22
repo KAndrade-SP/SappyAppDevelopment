@@ -6,7 +6,6 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import ModalinfoUser from './ModalUserOptions/ModalInfoUser';
 import ModalReportUser from './ModalUserOptions/ModalReportUser'
 
-
 function ModalUserImage({ open, onClose, ImageAvatar, Title, Desc }){
     
     const [image, setImage] = useState([])
@@ -26,7 +25,7 @@ function ModalUserImage({ open, onClose, ImageAvatar, Title, Desc }){
     const descriptionViewRef = useRef();
 
     //Criando o um touchableOpacityAnimado
-    const  AnimatableTouchableOpacity  =  Animatable . createAnimatableComponent ( TouchableOpacity ) ;
+    const AnimatableTouchableOpacity = Animatable.createAnimatableComponent(TouchableOpacity)
 
     useEffect(() => {
         return () => { setImage([]) }
@@ -44,27 +43,36 @@ function ModalUserImage({ open, onClose, ImageAvatar, Title, Desc }){
     return (    
         <View>
             {/*This model will be called when the user clicks on an image */}
-            <Modal isVisible = {open} animationIn='fadeIn' 
-                animationOut='fadeOut' 
+            <Modal isVisible = {open} 
+                animationIn={"bounceInUp"}
+                animationOut={"bounceOutDown"}
+                animationOutTiming={800}
+                animationInTiming={800} 
                 onBackdropPress={onClose}  
+                onBackButtonPress={onClose}
                 style={{alignItems:'center'}}
                 backdropOpacity={0}              
             >                 
-                <Animatable.View  style = {styles.viewModal} animation={animation} ref={viewRef}>                
-                    <Animatable.View style = {styles.perfilViewModal} ref={perfilViewRef} > 
+                <Animatable.View style={styles.viewModal} animation={animation} ref={viewRef}>                
+                    <Animatable.View style={styles.perfilViewModal} ref={perfilViewRef} > 
                         <Image source={{uri: ImageAvatar}} style={styles.imageChatModal} ref={imageRef} />
                         <Animatable.View style={styles.perfilViewModalTitle} ref={titleRef} >
                             <Text style={styles.chatNameModal}>{Title}</Text>
-                        </Animatable.View>                        
-                        <AnimatableTouchableOpacity style={styles.iconModalInfo} onPress={() => showModalInfo(touchInfo)} ref={iconInfoRef} >                                
-                            <SimpleLineIcons name="info" color={'#fff'} size={30} />
-                        </AnimatableTouchableOpacity>
-                        <AnimatableTouchableOpacity style={styles.iconModalReport} onPress={() => showModalReport(touchInfo)} ref={iconBanRef} >                                
-                            <SimpleLineIcons name="ban" color={'#fff'} size={30} />
-                        </AnimatableTouchableOpacity>
+                        </Animatable.View>    
+
+                        <Animatable.View style={styles.containerIcons}>                 
+                            <AnimatableTouchableOpacity style={styles.iconModalInfo} onPress={() => showModalInfo(touchInfo)} ref={iconInfoRef} >                                
+                                <SimpleLineIcons name="info" color={'#f5f5f5'} size={30} />
+                            </AnimatableTouchableOpacity>
+                            <AnimatableTouchableOpacity style={styles.iconModalReport} onPress={() => showModalReport(touchInfo)} ref={iconBanRef} >                                
+                                <SimpleLineIcons name="ban" color={'#f5f5f5'} size={30} />
+                            </AnimatableTouchableOpacity>
+                        </Animatable.View> 
+
                     </Animatable.View>                                 
                 </Animatable.View >
             </Modal>
+
             <ModalinfoUser
                 open={openModalInfo} 
                 onClose={() => 
@@ -80,164 +88,62 @@ function ModalUserImage({ open, onClose, ImageAvatar, Title, Desc }){
                 Title={Title}
                 Desc={Desc}                 
             />
-
-        </View>)
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-
-    imageChat: {
-        width: 40,
-        height: 40,
-        borderRadius: 100,
-        borderWidth: 0.2,
-        borderColor: 'gray'
-    },
-
-    imageChatModal: {
-        width: 250,
-        height: 250,        
-        borderWidth: 0.2,
-        backgroundColor: '#1c1c1c',        
-    },
 
     viewModal: {
         height: 300,
         width: 250,
         backgroundColor:'#212121',
-        marginBottom: 187,
-        borderRadius: 2,    
+        marginBottom: 150,
+        borderRadius: 10,    
     },
 
     perfilViewModal: {
         width: 250,
         height: 300,
-        backgroundColor: 'black'   
+        backgroundColor: '#000710'   
+    },
+
+    imageChatModal: {
+        width: 250,
+        height: 250,             
     },
 
     perfilViewModalTitle:{
-        width:250,
-        height: 32,
+        width: 250,
+        height: 30,
         alignItems:'baseline',
-        backgroundColor:'hsla(0, 0%, 0%, 0.3)',
+        backgroundColor:'#00071050',
         position: 'absolute',        
-    },
-
-    descriptionViewModal: {
-        width: 310,
-        height: 220,
-        alignItems: 'center',
-        position: 'absolute',
-        opacity: 0,
-        paddingLeft: 10,
-        paddingRight: 10       
-    },
-
-    chatName: {
-        fontSize: 16,
-        color: '#ffffff'
-    },    
-
-    chatProfession: {
-        fontSize: 12,
-        color: '#ffffff80',
-        fontStyle: 'italic'
     },
 
     chatNameModal: {
         fontSize: 20,
-        color: '#ffffff',
-        paddingLeft: 5                
+        color: '#f5f5f5',
+        paddingLeft: 8                
+    },
+
+    containerIcons: {
+        flex: 1,
+        alignItems: 'flex-start',
+        flexDirection: "row",
+        justifyContent: 'space-around',
+        backgroundColor:'#212121',
     },
 
     iconModalInfo: {
-        width: 125,
-        height: 50,
-        borderColor: 'black',
-        paddingTop: 6,
-        backgroundColor: '#1f1f1f',
-        position: 'absolute',
-        marginTop:250,
-        alignItems: 'center',
+        alignSelf: 'center',
+        justifyContent: 'center',
     },
 
     iconModalReport: {
-        width: 125,
-        height: 50,
-        borderColor: 'black',
-        paddingTop: 6,
-        backgroundColor: '#1f1f1f',
-        position: 'absolute',
-        marginTop:250,
-        marginLeft: 125,
-        alignItems: 'center'
+        alignSelf: 'center',
+        justifyContent: 'center',
     },
-
-    chatProfessionModal: {
-        fontSize: 16,
-        color: '#ffffff80',
-        fontStyle: 'italic',
-        opacity:0        
-    },
-
-    descriptionTitleModal: {
-        fontSize: 18,
-        color: '#ffffff',        
-    },
-
-    descriptionTextModal: {
-        fontSize: 16,
-        color: '#ffffff80',
-        paddingBottom:15,
-        paddingTop:5,
-        textAlign: 'justify'
-    },
-
-    profissionTextModal: {
-        fontSize: 25,
-        color: '#ccad00',
-        paddingBottom:5,
-        paddingTop:5,
-        textAlign: 'justify',
-    },
-
-    divValuesChat: {
-        alignItems: 'stretch',
-        flexDirection: 'row',
-        flex: 1
-    },
-
-    divNameDesc: {
-        marginLeft: 12
-    },   
-
-    spaceChat: {
-        flex: 1,
-        paddingRight: 8,
-        paddingLeft: 8,   
-    },
-
-    cardChat: {
-        backgroundColor: '#212121',
-        paddingTop: 8,
-        paddingEnd: 8,
-        paddingStart: 8,
-        paddingBottom: 8,
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
-        borderTopRightRadius: 15,
-        borderTopLeftRadius: 4,
-        borderBottomWidth: 0.2,
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: 'space-between',
-        marginTop: 4,
-        marginBottom: 4,
-        paddingLeft: 12
-    }
 })
 
 export default ModalUserImage;

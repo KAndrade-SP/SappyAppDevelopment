@@ -59,6 +59,25 @@ const styles = StyleSheet.create({
         paddingLeft: 12
     },
 
+    contentInputDesc: {
+        height: 70,
+        backgroundColor: '#212121',
+        paddingEnd: 8,
+        paddingStart: 8,
+        paddingBottom: 8,
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        borderTopRightRadius: 15,
+        borderTopLeftRadius: 4,
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: 'flex-start',
+        alignItems: 'baseline',
+        marginTop: 4,
+        marginBottom: 8,
+        paddingLeft: 12
+    },
+
     contentButton: {
         flexDirection: "row",
         justifyContent: 'flex-start',

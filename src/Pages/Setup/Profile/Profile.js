@@ -73,11 +73,12 @@ export default function Profile() {
                     <View style={styles.contentText}>
                         <Text style={styles.text}>Bio:</Text>
                     </View>
-                    <View style={styles.contentInput}>
+                    <View style={styles.contentInputDesc}>
                         <TextInput
                             onChangeText={a => setBio(a)}
-                            maxLength={45}
-                            autoCapitalize='none'
+                            maxLength={80}
+                            multiline
+                            numberOfLines={3}  
                             defaultValue={bio}
                             style={styles.textInput}
                         />

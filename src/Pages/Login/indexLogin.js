@@ -33,10 +33,8 @@ export default function Login() {
           index: 0,
           routes: [{ name: 'Home' }],
         })
-
       } else navigation.navigate('Login')
     })
-
     return () => { isMounted = false }
   }, [])
 
@@ -45,7 +43,6 @@ export default function Login() {
     if (firebaseUser) {
       const providerData = firebaseUser.providerData;
       for (const i = 0; i < providerData.length; i++) {
-
         if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
           providerData[i].uid === googleUser.getBasicProfile().getId()) {
           // Nós não precisamos reautenticar no firebase.
@@ -78,7 +75,6 @@ export default function Login() {
       }
     })
     unsubscribe() // chamando função
-
   };
 
   // Função que prepara os dados a função de login.
@@ -109,7 +105,6 @@ export default function Login() {
         customBgColor='#ccad00'
         customWavePattern="M0,224L60,202.7C120,181,240,139,360,138.7C480,139,600,181,720,218.7C840,256,960,288,1080,277.3C1200,267,1320,213,1380,186.7L1440,160L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
       >
-
       </WavyHeader>
 
       <View style={styles.headerContainer}>
@@ -121,8 +116,6 @@ export default function Login() {
           style={styles.image} 
           source={WhiteLogo800x800}
         />
-          
-
         <TouchableOpacity
           style={styles.googleBtn}
           onPress={() => signInWithGoogleAsync()}
