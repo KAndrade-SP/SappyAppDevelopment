@@ -1,49 +1,44 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Text, View, TextInput, Image, TouchableOpacity, ToastAndroid } from "react-native"
 
-import { useNavigation } from '@react-navigation/native'
+import firebase from '../../../../Config/firebaseconfig'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import { useNavigation } from '@react-navigation/native'
 
-import firebase from '../../../Config/firebaseconfig'
-import styles from './styleProfile'
+import styles from './StyleEditGroup'
 
-export default function Profile() {
-
+export default function EditGroup({ route }) {
     const navigation = useNavigation()
 
-    // Pegando id do usuario atual.
-    const { uid } = firebase.auth().currentUser.providerData[0]
-    
-    // Constantes para armazenar valores alterados.
-    const [nameUser, setNameUser] = useState()
-    const [photoUrl, setPhotoURL] = useState()
-    const [bio, setBio] = useState()
+    const [Picture, setImageGp] = useState(route.params?.photoUrl) //Foto do Grupo
+    const [Title, setTitle] = useState(route.params?.groupName)
+    const [Description, setDesc] = useState(route.params?.groupDesc)
 
-    // Armazenando dados iniciais, a partir do banco.
-    useEffect(() => {
-        firebase.database()
-            .ref(`Users/${uid}`)
+    const [Messages, setBkpMenssagem] = useState({})
+   
+    async function changeData() {
+        console.log(Messages)
+        await firebase.database()
+            .ref(`Grupos/${route.params?.groupName}`)
             .once('value')
             .then(snapshot => {
-                const { name, bio, photoUrl } = snapshot.val()
-                setNameUser(name)
-                setBio(bio)
-                setPhotoURL(photoUrl)
-            })
-    }, [])
-
-    // Função para atualizar os dados do usuário no banco.
-    async function changeData(id, name, bio) {
-        await firebase.database()
-            .ref(`Users/${id}`)
+                const data = snapshot.val()
+                if(data.Messages != undefined) setBkpMenssagem(data.Messages)
+        }).then(() => {
+            firebase.database()
+            .ref(`Grupos/${Title}`)
             .update({
-                name,
-                bio
+                Description,
+                Messages,
+                Picture
             })
             .then(() => {
                 ToastAndroid.show("Dados alterados com sucesso!", ToastAndroid.SHORT)
                 navigation.navigate('Home')
             })
+            firebase.database().ref(`Grupos/${route.params?.groupName}`).remove()
+        })
+        
     }
 
     return (
@@ -51,45 +46,44 @@ export default function Profile() {
             <View style={styles.panel}>
                 <Image
                     style={styles.photo}
-                    source={{ uri: photoUrl }}
+                    source={{ uri: Picture }}
                     resizeMode="stretch"
                 />
 
                 <View style={styles.contentView}>
                     <View style={styles.contentText}>
-                        <Text style={styles.text}>Nome de Usuário:</Text>
+                        <Text style={styles.text}>Nome do Grupo:</Text>
                     </View>
                     <View style={styles.contentInput}>
                         <TextInput
-                            onChangeText={e => setNameUser(e)}
+                            onChangeText={e => setTitle(e)}
                             maxLength={45}
-                            defaultValue={nameUser}
+                            defaultValue={Title}
                             style={styles.textInput}
                         />
                     </View>
                 </View>
-                
+
                 <View style={styles.contentView}>
                     <View style={styles.contentText}>
-                        <Text style={styles.text}>Bio:</Text>
+                        <Text style={styles.text}>Descrição:</Text>
                     </View>
                     <View style={styles.contentInputDesc}>
                         <TextInput
-                            onChangeText={a => setBio(a)}
+                            onChangeText={a => setDesc(a)}
                             maxLength={255}
                             multiline
-                            numberOfLines={3}  
-                            defaultValue={bio}
+                            numberOfLines={3}
+                            defaultValue={Description}
                             style={styles.textInput}
                         />
                     </View>
                 </View>
-                
             </View>
 
             <TouchableOpacity
                 style={styles.floatButton}
-                onPress={() => changeData(uid, nameUser, bio)}
+                onPress={() => changeData()}
             >
                 <SimpleLineIcons
                     name="pencil"
@@ -97,6 +91,7 @@ export default function Profile() {
                     size={22}
                 />
             </TouchableOpacity>
+
         </View>
     )
 }

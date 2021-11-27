@@ -1,271 +1,179 @@
-import React, { useEffect, useState, useRef } from "react";
-import { TouchableOpacity, Text, View, Image, StyleSheet, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react"
+import { Text, View, Image, ScrollView, ToastAndroid, TouchableOpacity } from "react-native"
 import Modal from 'react-native-modal'
-import * as Animatable from 'react-native-animatable';
+
+import * as Animatable from 'react-native-animatable'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import firebase from '../../../Config/firebaseconfig'
+import styles from "./StylesInfoUser"
 
-function ModalInfoUser({open, onClose, ImageAvatar, Title, Desc}){    
+function ModalInfoUser({ open, onClose, ImageAvatar, Title, Desc, Identify }) {
+
+    const [userData, setUserData] = useState({
+        prof: false,
+        bioUser: '',
+        id: '',
+        likeValue: 0,
+        deslikeValue: 0,
+        likeWho: '',
+        deslikeWho: '',
+        area: '',
+    })
     
-    const { uid } = firebase.auth().currentUser.providerData[0]
-    const [validProf, setValidProf] = useState([])    
+    const [buttonLike, setButtonLike] = useState('white')
+    const [buttonDislike, setButtonDislike] = useState('white')
+    const [touched, setTouched] = useState(false)
 
-    useEffect(() => {
-        firebase.database()
-            .ref(`Users/${uid}`)
+    const currentUser = firebase.auth().currentUser.email
+
+    async function validator() {
+        await firebase.database()
+            .ref(`Users`)
             .once('value')
             .then(snapshot => {
-                const data = snapshot.val()
-                if (data.isProf != "false") setValidProf(true)
-            })
+                const data = Object.values(snapshot.val()) // Pegando todos os dados.
+                data.map(({ bio, dataProf, actions }, key) => {
+                    // Setar cardChat com os valores, caso a validação for verdadeira. 
+                    if (data[key].email == Identify && data[key].isProf == "true") {
+                        setUserData({
+                            bioUser: bio,
+                            id: Object.keys(snapshot.val())[key],
+                            likeValue: parseInt(dataProf.like),
+                            deslikeValue: parseInt(dataProf.deslike),
+                            prof: true,
+                            likeWho: actions.likedWho,
+                            deslikeWho: actions.deslikedWho,
+                            area: dataProf.area
+                        })
 
+                    }
+                }) 
+            })
+    }
+
+    function setStates(){
+        if (userData.likeWho != '' && userData.likeWho != undefined) {
+                const likes = userData.likeWho.split(',')
+                console.log("Likeddddd")
+                likes.map((value,key) => {
+                    console.log(value)
+                    if(value == currentUser){
+                        setButtonLike('green')
+                        setTouched(true)
+                    }
+                })
+                
+            } else if(userData.deslikeWho != '' && userData.deslikeWho != undefined){
+                const deslikes = userData.deslikeWho.split(',')
+                console.log("desLikeddddd")
+                deslikes.map((value,key) => {
+                    console.log(value)
+                    if(value == currentUser){
+                        setButtonDislike('red')
+                        setTouched(true)
+                    }
+                })
+            }
+    }
+    function evaluation(action) {
+        if (action == 0 && buttonLike == 'white') {
+            setButtonLike('green')
+            let Like = userData.likeValue += 1
+
+            // Adicionando like no banco
+            firebase.database().ref(`Users/${userData.id}`).update({
+                dataProf: {
+                    area: userData.area,
+                    deslike: (userData.deslikeValue).toString(),
+                    like: (Like).toString()
+                },
+                actions: {
+                    deslikedWho: userData.deslikeWho,
+                    likedWho: userData.likeWho + ',' + currentUser
+                }
+            })
+        }
+        if (action == 1 && buttonDislike == 'white') {
+            setButtonDislike('red')
+            let Deslike = userData.deslikeValue += 1
+
+            // Adicionando deslike no banco
+            firebase.database().ref(`Users/${userData.id}`).update({
+                dataProf: {
+                    dataProf: {
+                        area: userData.area,
+                        like: (userData.likeValue).toString(),
+                        deslike: (Deslike).toString()
+                    },
+                },
+                actions: {
+                    likedWho: userData.likeWho,
+                    deslikedWho: userData.deslikeWho + ',' + currentUser
+                }
+            })
+        }
+        ToastAndroid.show("Profissional Avaliado", ToastAndroid.SHORT)
+        setTouched(true)
+    }
+
+    useEffect(() => {
+        let isMounted = true
+        if (isMounted) {
+            validator().then(setStates)
+            isMounted = false
+        }
     }, [])
 
-    return ( 
+    return (
         <View>
             {/*This model will be called when the user clicks on an image */}
-            <Modal isVisible = {open} 
+            <Modal isVisible={open}
+                onBackButtonPress={onClose}
+                onBackdropPress={onClose}
                 animationIn={"bounceInUp"}
                 animationOut={"bounceOutDown"}
                 animationOutTiming={800}
-                animationInTiming={800} 
-                onBackdropPress={onClose}  
-                style={{alignItems:'center'}}
-                backdropOpacity={0}              
+                animationInTiming={800}
+                style={{ alignItems: 'center' }}
+                backdropOpacity={0}
             >
                 <View style={styles.viewModal}>
-                    <View style = {styles.perfilViewModal}>
-                        <Image source={{uri: ImageAvatar}} style={styles.imageChatModal}></Image>
-                        <View style={styles.perfilViewModalTitle}>                            
+                    <View style={styles.perfilViewModal}>
+                        <Image source={{ uri: ImageAvatar }} style={styles.imageChatModal}></Image>
+                        <View style={styles.perfilViewModalTitle}>
                             <Text style={styles.chatNameModal}>{Title}</Text>
-                        </View>                    
+                        </View>
                     </View>
-                    <View>    
-                        {validProf != false ? isProfession(Desc): teste()}
+                    <View>
+                        {userData.prof == true ?
+                            <View>
+                                <Animatable.View style={styles.evaluationModal}>
+                                    <Animatable.View style={styles.infoEvaluationModal}>
+                                        <TouchableOpacity disabled={touched} onPress={() => evaluation(0)} style={styles.iconLike}>
+                                            <SimpleLineIcons name="like" color={buttonLike} size={22} />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity disabled={touched} onPress={() => evaluation(1)}>
+                                            <SimpleLineIcons name="dislike" color={buttonDislike} size={22} />
+                                        </TouchableOpacity>
+
+                                    </Animatable.View>
+                                </Animatable.View>
+                            </View>
+                            :
+                            <></>
+                        }
+                        <View style={styles.descriptionViewModal}>
+                            <ScrollView>
+                                {userData.prof == true ? <Text style={styles.profissionTextModal}>{Desc}</Text> : <></>}
+                                <Text style={styles.descriptionTitleModal}>Biografia</Text>
+                                <Text style={styles.descriptionTextModal}>{userData.bioUser}</Text>
+                            </ScrollView>
+                        </View>
                     </View>
                 </View>
             </Modal>
-        </View>  
-    )
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-
-    imageChat: {
-        width: 40,
-        height: 40,
-        borderRadius: 100,
-        borderWidth: 0.2,
-        borderColor: 'gray'
-    },
-
-    imageChatModal: {
-        height:150, 
-        width: 150, 
-        marginLeft: 80,
-        borderWidth: 0.2,
-        backgroundColor: '#1c1c1c',        
-    },
-
-    viewModal: {
-        marginTop: 195, 
-        height: 495, 
-        width: 310,
-        backgroundColor:'#212121',
-        marginBottom: 187,
-        borderRadius: 2,    
-    },
-
-    perfilViewModal: {
-        width: 310, 
-        height: 150, 
-        marginTop: 32,
-        backgroundColor: 'black'   
-    },
-
-    perfilViewModalTitle:{
-        height: 32, 
-        width: 310, 
-        marginTop: -32,        
-        alignItems:'center',
-        backgroundColor:'hsla(0, 0%, 0%, 0.1)',
-        position: 'absolute',        
-    },
-
-    descriptionViewModal: {
-        width: 310,
-        height: 243,
-        alignItems: 'center',
-        opacity: 1,
-        paddingLeft: 10,
-        paddingRight: 10       
-    },
-
-    chatName: {
-        fontSize: 16,
-        color: '#ffffff'
-    },    
-
-    chatProfession: {
-        fontSize: 12,
-        color: '#ffffff80',
-        fontStyle: 'italic'
-    },
-
-    chatNameModal: {
-        fontSize: 20,
-        color: '#ffffff',
-        paddingLeft: 5                
-    },
-
-    evaluationModal: {
-        width: 310,
-        height: 70,
-        borderColor: 'black',
-        paddingTop: 6,
-        paddingLeft: 10,
-        backgroundColor: '#171717',                
-        alignItems: 'baseline',
-        flexDirection:'row',
-    },
-
-    infoEvaluationModal:{        
-        width: 310,
-        position: 'absolute',
-        marginTop: 40,
-        paddingLeft: 10,
-        flexDirection:'row',            
-    },
-
-    evaluationTextTitle:{
-        fontSize: 18,
-        color: '#ffffff',
-        paddingRight: 10
-    },
-
-    evaluationText:{
-        fontSize: 18,
-        color: '#ffffff80',
-        paddingRight: 45,
-    },
-
-    iconStar:{
-        backgroundColor: 'white'
-    },
-
-    iconModalReport: {
-        width: 155,
-        height: 50,
-        borderColor: 'black',
-        paddingTop: 6,
-        backgroundColor: '#1f1f1f',
-        position: 'absolute',
-        marginTop:150,
-        marginLeft: 155,
-        alignItems: 'center'
-    },
-
-    chatProfessionModal: {
-        fontSize: 16,
-        color: '#ffffff80',
-        fontStyle: 'italic',
-        opacity:0        
-    },
-
-    descriptionTitleModal: {
-        fontSize: 18,
-        color: '#ffffff',        
-    },
-
-    descriptionTextModal: {
-        fontSize: 16,
-        color: '#ffffff80',
-        paddingBottom:15,
-        paddingTop:5,
-        textAlign: 'justify'
-    },
-
-    profissionTextModal: {
-        fontSize: 25,
-        color: '#ccad00',
-        paddingBottom:5,
-        paddingTop:5,
-        textAlign: 'justify',
-    },
-
-    divValuesChat: {
-        alignItems: 'stretch',
-        flexDirection: 'row',
-        flex: 1
-    },
-
-    divNameDesc: {
-        marginLeft: 12
-    },   
-
-    spaceChat: {
-        flex: 1,
-        paddingRight: 8,
-        paddingLeft: 8,   
-    },
-
-    cardChat: {
-        backgroundColor: '#212121',
-        paddingTop: 8,
-        paddingEnd: 8,
-        paddingStart: 8,
-        paddingBottom: 8,
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
-        borderTopRightRadius: 15,
-        borderTopLeftRadius: 4,
-        borderBottomWidth: 0.2,
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: 'space-between',
-        marginTop: 4,
-        marginBottom: 4,
-        paddingLeft: 12
-    }
-})
-
-const teste = () => {
-    return(<View style={{backgroundColor: 'blue', width: '10', height: 10}}></View>)
-}
-
-//Variavel que armazena os componentes que serão renderizados caso o usuário seja um profissional
-const isProfession = (Desc) => {
-    return(
-        <View>
-            <Animatable.View style={styles.evaluationModal}>
-                    <Text style={styles.evaluationTextTitle}>Média:</Text>
-                    <Text style={styles.evaluationText}>5,0</Text>
-                    <Text style={styles.evaluationText}>- 100 Avaliações</Text>                            
-                    <Animatable.View style={styles.infoEvaluationModal}>
-                        <SimpleLineIcons name="star" color={'#fff'} size={20} style={{paddingRight: 3 }}/>
-                        <SimpleLineIcons name="star" color={'#fff'} size={20} style={{paddingRight: 3 }}/>
-                        <SimpleLineIcons name="star" color={'#fff'} size={20} style={{paddingRight: 3 }}/>
-                        <SimpleLineIcons name="star" color={'#fff'} size={20} style={{paddingRight: 3 }}/>
-                        <SimpleLineIcons name="star" color={'#fff'} size={20} style={{paddingRight: 3 }}/>                                                        
-                    </Animatable.View>    
-                </Animatable.View>                        
-                <View style = {styles.descriptionViewModal}>
-                    <ScrollView>    
-                        <Text style={styles.profissionTextModal}>{Desc}</Text>                          
-                        <Text style={styles.descriptionTitleModal}>Descrição</Text>
-                        <Text style={styles.descriptionTextModal}>
-                            Trabalho com psicologia a 7 anos e nesse periodo pude auxiliar diversos 
-                            pacientes no combate a depressão, ansiedade e muitos outros casos. 
-                            Meu objetivo é conseguir ajudá-lo a combater suas dificuldades 
-                            e lidar com seus problemas. Será um prazer ajudá-lo.
-                        </Text>
-                    </ScrollView> 
-                </View>
         </View>
-    );
+    )
 }
 
 export default ModalInfoUser;

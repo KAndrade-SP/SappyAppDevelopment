@@ -3,7 +3,20 @@ import firebase from './firebaseconfig'
 const api = {
 
     // Função para criar usuário, com dados recebidos a tela de login.
-    createUser: async (email, id, name, photoUrl, isAdmin = 'false', isProf = 'false', bio = '', medRating = '0', totalRating = '0', area = '') => {
+    createUser: async (
+        email,
+        id,
+        name,
+        photoUrl,
+        isAdmin = 'false',
+        isProf = 'false',
+        bio = 'Hello there, I am use Sappy ...',
+        likedWho = '',
+        deslikedWho = '',
+        like = '0',
+        deslike = '0',
+        area = '',
+    ) => {
         const dataBase = firebase.database().ref(`Users/${id}`)
         await dataBase.once('value')
             .then(snapshot => {
@@ -18,8 +31,12 @@ const api = {
                         bio,
                         dataProf: {
                             area,
-                            medRating,
-                            totalRating
+                            like,
+                            deslike
+                        },
+                        actions: {
+                            likedWho,
+                            deslikedWho
                         }
                     })
             })

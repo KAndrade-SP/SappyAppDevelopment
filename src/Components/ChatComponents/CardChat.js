@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { View, Text, Image, TouchableOpacity, LogBox } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
-import ModalUserImage from '../ModalComponents/ModalUserImage';
+
+import { useNavigation } from '@react-navigation/native'
+import ModalUserImage from '../ModalComponents/ModalUserImage'
 
 import styles from './styleCardChat'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 export default function CardChat({Title, Desc, ImageAvatar, Identify}){
 
@@ -51,6 +51,7 @@ export default function CardChat({Title, Desc, ImageAvatar, Identify}){
                 ImageAvatar={ImageAvatar} 
                 Title={Title}
                 Desc={Desc}
+                Identify={Identify}
             />
         </View>
     );

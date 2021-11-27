@@ -10,6 +10,8 @@ import ChatGroup from './src/Pages/SappyChat/ChatGroup/indexGroupChat'
 import Setup from './src/Pages/Setup/indexSetup'
 import Profile from './src/Pages/Setup/Profile/Profile'
 import UserList from './src/Pages/Setup/UserList/UserList'
+import EditGroup from './src/Pages/SappyChat/ChatGroup/GroupOptions/EditGroup'
+import CreateGroup from './src/Pages/SappyChat/ChatGroup/GroupOptions/CreateGroup'
 
 const Stack = createStackNavigator();
 
@@ -126,6 +128,47 @@ export default function App() {
             },
           }}
         />
+
+        <Stack.Screen
+          name="EditGroup"
+          component={EditGroup}
+          options={{
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#000710',
+              height: 90,
+            },
+            headerTitle: "Editar Grupo",
+            headerTintColor: '#f5f5f5',
+            headerTitleStyle: {
+              paddingLeft: 10,
+              paddingRight: 10,
+              paddingBottom: 4,
+              flexWrap: 'nowrap'
+            },
+          }}
+        />
+
+<Stack.Screen
+          name="CreateGroup"
+          component={CreateGroup}
+          options={{
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#000710',
+              height: 90,
+            },
+            headerTitle: "Criar Grupo",
+            headerTintColor: '#f5f5f5',
+            headerTitleStyle: {
+              paddingLeft: 10,
+              paddingRight: 10,
+              paddingBottom: 4,
+              flexWrap: 'nowrap'
+            },
+          }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

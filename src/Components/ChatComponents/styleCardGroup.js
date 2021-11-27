@@ -54,7 +54,9 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#f5f5f580',
         fontStyle: 'italic',
-        marginTop: 2
+        marginTop: 2,
+        maxWidth: 260,
+        maxHeight: 50,
     },
 
     containerButton: {
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         marginTop: 68,                      
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         opacity: 0
     },
 

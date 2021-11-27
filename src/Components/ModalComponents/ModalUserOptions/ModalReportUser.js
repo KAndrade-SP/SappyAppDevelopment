@@ -4,11 +4,34 @@ import Modal from 'react-native-modal'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import firebase from '../../../Config/firebaseconfig'
 
-function ModalReportUser({open, onClose, Title, Desc}){
+function ModalReportUser({open, onClose, Identify}){
+
+    const [validProf, setValidProf] = useState(false)    
+
+    function validator() {
+        firebase.database()
+            .ref(`Users`)
+            .once('value')
+            .then(snapshot => {
+                console.log()
+                const data = Object.values(snapshot.val()) // Pegando todos os dados.
+                data.map(({isProf}, key) => {
+                    // Setar cardChat com os valores, caso a validação for verdadeira. 
+                    if (data[key].email == Identify && data[key].isProf == "true"){
+                        setValidProf(true)                       
+                    }                             
+                })
+                                
+            })
+    }
+
+    useEffect(() => {
+        if(open) validator()
+        return () => {}
+    })
 
     return (
         <View>            
-            {/*This model will be called when the user clicks on an image */}
             <Modal isVisible = {open} 
                 animationIn={"bounceInUp"}
                 animationOut={"bounceOutDown"}
@@ -17,12 +40,12 @@ function ModalReportUser({open, onClose, Title, Desc}){
                 onBackdropPress={onClose}  
                 onBackButtonPress={onClose}
                 style={{ alignItems: 'center', flex: 1 }}
-                backdropOpacity={0}              
-            >
+                backdropOpacity={0}>
+
                 <View style={styles.viewModal}>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>                            
                         <View style={styles.containerTitle}>                            
-                            <Text style={styles.chatNameModal}>Reportar profissional</Text>
+                            <Text style={styles.chatNameModal}>{ validProf == true ? "Reportar profissional" : "Reportar Usuário"}</Text>
                         </View>
                         <View style={styles.perfilViewModal}>
                             <View style={styles.contentText}>

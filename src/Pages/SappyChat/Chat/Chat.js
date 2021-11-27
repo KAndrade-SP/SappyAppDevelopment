@@ -23,7 +23,7 @@ export default function SappyChat() {
                     // Setar cardChat com os valores, caso a validação for verdadeira. 
                     if (data[key].email != current_user && isProf == "true") {
                         return <CardChat
-                            key={key} Title={name}
+                            key={key} Title={`${name} 💠`}
                             Desc={dataProf.area}
                             ImageAvatar={photoUrl}
                             Identify={email}

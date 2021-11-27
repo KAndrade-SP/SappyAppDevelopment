@@ -6,12 +6,10 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import ModalinfoUser from './ModalUserOptions/ModalInfoUser';
 import ModalReportUser from './ModalUserOptions/ModalReportUser'
 
-function ModalUserImage({ open, onClose, ImageAvatar, Title, Desc }){
+function ModalUserImage({ open, onClose, ImageAvatar, Title, Desc, Identify }){
     
     const [image, setImage] = useState([])
-
-    const [touchInfo, setTouchInfo] = useState(false)
-    const [animation, setAnimation] = useState("")
+        
     const [openModalInfo, setOpenModalInfo] = useState(false)
     const [openModalReport, setOpenModalReport] = useState(false)
 
@@ -31,11 +29,11 @@ function ModalUserImage({ open, onClose, ImageAvatar, Title, Desc }){
         return () => { setImage([]) }
     }, [])
 
-    function showModalInfo(touchInfo){   
+    function showModalInfo(){   
         setOpenModalInfo(!openModalInfo)
     }
 
-    function showModalReport(touchInfo){   
+    function showModalReport(){   
         setOpenModalReport(!openModalReport)
     }
     
@@ -43,17 +41,17 @@ function ModalUserImage({ open, onClose, ImageAvatar, Title, Desc }){
     return (    
         <View>
             {/*This model will be called when the user clicks on an image */}
-            <Modal isVisible = {open} 
+            <Modal isVisible={open}
+                onBackButtonPress={onClose}
+                onBackdropPress={onClose}
                 animationIn={"bounceInUp"}
                 animationOut={"bounceOutDown"}
                 animationOutTiming={800}
-                animationInTiming={800} 
-                onBackdropPress={onClose}  
-                onBackButtonPress={onClose}
+                animationInTiming={800}
                 style={{alignItems:'center'}}
                 backdropOpacity={0}              
             >                 
-                <Animatable.View style={styles.viewModal} animation={animation} ref={viewRef}>                
+                <Animatable.View style={styles.viewModal} ref={viewRef}>                
                     <Animatable.View style={styles.perfilViewModal} ref={perfilViewRef} > 
                         <Image source={{uri: ImageAvatar}} style={styles.imageChatModal} ref={imageRef} />
                         <Animatable.View style={styles.perfilViewModalTitle} ref={titleRef} >
@@ -61,10 +59,10 @@ function ModalUserImage({ open, onClose, ImageAvatar, Title, Desc }){
                         </Animatable.View>    
 
                         <Animatable.View style={styles.containerIcons}>                 
-                            <AnimatableTouchableOpacity style={styles.iconModalInfo} onPress={() => showModalInfo(touchInfo)} ref={iconInfoRef} >                                
+                            <AnimatableTouchableOpacity style={styles.iconModalInfo} onPress={() => {showModalInfo(); onClose()}} ref={iconInfoRef} >                                
                                 <SimpleLineIcons name="info" color={'#f5f5f5'} size={30} />
                             </AnimatableTouchableOpacity>
-                            <AnimatableTouchableOpacity style={styles.iconModalReport} onPress={() => showModalReport(touchInfo)} ref={iconBanRef} >                                
+                            <AnimatableTouchableOpacity style={styles.iconModalReport} onPress={() => {showModalReport(); onClose()}} ref={iconBanRef} >                                
                                 <SimpleLineIcons name="ban" color={'#f5f5f5'} size={30} />
                             </AnimatableTouchableOpacity>
                         </Animatable.View> 
@@ -80,13 +78,15 @@ function ModalUserImage({ open, onClose, ImageAvatar, Title, Desc }){
                 ImageAvatar={ImageAvatar} 
                 Title={Title}
                 Desc={Desc}
+                Identify={Identify}
             />
             <ModalReportUser
                 open={openModalReport} 
                 onClose={() => 
                 setOpenModalReport(false)}
                 Title={Title}
-                Desc={Desc}                 
+                Desc={Desc}
+                Identify={Identify}                 
             />
         </View>
     )
