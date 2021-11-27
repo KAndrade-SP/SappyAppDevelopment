@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         paddingBottom: 4,
         height: 400, 
         width: 300,
-        backgroundColor:'#212121',
+        backgroundColor:'#171717',
         borderRadius: 10,   
         flexDirection: 'column',
     },
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         paddingBottom: 8,
         marginBottom: 6,
         borderBottomWidth: 0.5,
-        borderBottomColor: '#f5f5f580'
+        borderBottomColor: '#f5f5f590'
     },
 
     lastContainerText: {
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         marginRight: 12,
         marginTop: 2,
         marginBottom: 2,
-        color: "#f5f5f580",
+        color: "#f5f5f590",
         fontSize: 12,
         textAlign: 'center',
         lineHeight: 18

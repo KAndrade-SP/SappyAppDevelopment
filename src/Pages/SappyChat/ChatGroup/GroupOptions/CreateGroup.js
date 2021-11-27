@@ -44,6 +44,8 @@ export default function CreateGroup() {
                             onChangeText={e => setPicture(e)}
                             maxLength={255}
                             style={styles.textInput}
+                            placeholder="Insira um link para carregar uma imagem"
+                            placeholderTextColor='#f5f5f550'
                         />
                     </View>
                 </View>
@@ -55,8 +57,10 @@ export default function CreateGroup() {
                     <View style={styles.contentInput}>
                         <TextInput
                             onChangeText={e => setTitle(e)}
-                            maxLength={45}
+                            maxLength={25}
                             style={styles.textInput}
+                            placeholder="Insira um nome para o grupo"
+                            placeholderTextColor='#f5f5f550'
                         />
                     </View>
                 </View>
@@ -68,9 +72,11 @@ export default function CreateGroup() {
                     <View style={styles.contentInputDesc}>
                         <TextInput
                             onChangeText={a => setDescription(a)}
-                            maxLength={255}
+                            maxLength={45}
                             multiline={true}
                             style={styles.textInput}
+                            placeholder="Insira uma breve descrição do grupo"
+                            placeholderTextColor='#f5f5f550'
                         />
                     </View>
                 </View>

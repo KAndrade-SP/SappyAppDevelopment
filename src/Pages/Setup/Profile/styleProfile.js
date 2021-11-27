@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
 
     contentInputDesc: {
-        height: 70,
+        height: 90,
         backgroundColor: '#212121',
         paddingEnd: 8,
         paddingStart: 8,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        color: '#f5f5f590',
+        color: '#f5f5f5',
         fontSize: 16,
     },
 

@@ -76,7 +76,7 @@ export default function Profile() {
                     <View style={styles.contentInputDesc}>
                         <TextInput
                             onChangeText={a => setBio(a)}
-                            maxLength={255}
+                            maxLength={150}
                             multiline
                             numberOfLines={3}  
                             defaultValue={bio}

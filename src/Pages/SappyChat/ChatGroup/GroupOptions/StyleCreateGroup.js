@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         width: "100%",
         flexDirection: "row",
         justifyContent: 'flex-start',
-        alignItems: 'baseline',
+        alignItems: 'center',
         marginTop: 4,
         marginBottom: 8,
         paddingLeft: 12
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        color: '#f5f5f590',
+        color: '#f5f5f5',
         fontSize: 16,
     },
 

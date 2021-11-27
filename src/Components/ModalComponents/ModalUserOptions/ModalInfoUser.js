@@ -53,10 +53,8 @@ function ModalInfoUser({ open, onClose, ImageAvatar, Title, Desc, Identify }) {
 
     function setStates(){
         if (userData.likeWho != '' && userData.likeWho != undefined) {
-                const likes = userData.likeWho.split(',')
-                console.log("Likeddddd")
+                const likes = userData.likeWho.split(',')              
                 likes.map((value,key) => {
-                    console.log(value)
                     if(value == currentUser){
                         setButtonLike('green')
                         setTouched(true)
@@ -64,10 +62,8 @@ function ModalInfoUser({ open, onClose, ImageAvatar, Title, Desc, Identify }) {
                 })
                 
             } else if(userData.deslikeWho != '' && userData.deslikeWho != undefined){
-                const deslikes = userData.deslikeWho.split(',')
-                console.log("desLikeddddd")
+                const deslikes = userData.deslikeWho.split(',')               
                 deslikes.map((value,key) => {
-                    console.log(value)
                     if(value == currentUser){
                         setButtonDislike('red')
                         setTouched(true)
@@ -149,13 +145,12 @@ function ModalInfoUser({ open, onClose, ImageAvatar, Title, Desc, Identify }) {
                             <View>
                                 <Animatable.View style={styles.evaluationModal}>
                                     <Animatable.View style={styles.infoEvaluationModal}>
-                                        <TouchableOpacity disabled={touched} onPress={() => evaluation(0)} style={styles.iconLike}>
-                                            <SimpleLineIcons name="like" color={buttonLike} size={22} />
+                                        <TouchableOpacity disabled={touched} onPress={() => evaluation(0)}>
+                                            <SimpleLineIcons name="like" color={buttonLike} size={22}/>
                                         </TouchableOpacity>
                                         <TouchableOpacity disabled={touched} onPress={() => evaluation(1)}>
-                                            <SimpleLineIcons name="dislike" color={buttonDislike} size={22} />
+                                            <SimpleLineIcons name="dislike" color={buttonDislike} size={22}/>
                                         </TouchableOpacity>
-
                                     </Animatable.View>
                                 </Animatable.View>
                             </View>
@@ -163,11 +158,19 @@ function ModalInfoUser({ open, onClose, ImageAvatar, Title, Desc, Identify }) {
                             <></>
                         }
                         <View style={styles.descriptionViewModal}>
-                            <ScrollView>
-                                {userData.prof == true ? <Text style={styles.profissionTextModal}>{Desc}</Text> : <></>}
-                                <Text style={styles.descriptionTitleModal}>Biografia</Text>
-                                <Text style={styles.descriptionTextModal}>{userData.bioUser}</Text>
-                            </ScrollView>
+                            
+                                {userData.prof == true ? 
+                                    <View style={styles.professionTitle}>
+                                        <SimpleLineIcons name="briefcase" color={'#f5f5f5'} size={20}/>
+                                        <Text style={styles.profissionTextModal}>{Desc}</Text> 
+                                    </View>
+                                    : 
+                                    <></>
+                                }
+                                <View style={styles.contentInputDesc}>
+                                    <Text style={styles.descriptionTextModal}>{userData.bioUser}</Text>
+                                </View>
+                            
                         </View>
                     </View>
                 </View>

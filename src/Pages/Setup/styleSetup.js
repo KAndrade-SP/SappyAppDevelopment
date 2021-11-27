@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     descOptions: {
         marginLeft: 12,
         marginTop: 6,
-        color: "#f5f5f580",
+        color: "#f5f5f590",
         fontSize: 12,
     }
 

@@ -149,7 +149,7 @@ export default function App() {
           }}
         />
 
-<Stack.Screen
+        <Stack.Screen
           name="CreateGroup"
           component={CreateGroup}
           options={{

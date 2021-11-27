@@ -22,36 +22,36 @@ function UserList() {
                         <View style={styles.contentUser} key={key}>
                             <Text style={styles.text}>{name}</Text>
                             {isProf == "true" // validação para setar cor do botao: É profissional(verde), Não é(vermelho)
-                                ?
-                                <TouchableOpacity
-                                    style={styles.iconButton}
-                                    onPress={() => {
-                                        const keyID = Object.keys(snapshot.val())[key]
-                                        changeStatusProf("false", keyID)
-                                        ToastAndroid.show(`O usuario ${name}, não é mais um Profissional`, ToastAndroid.LONG);
-                                    }}
-                                >
-                                    <SimpleLineIcons
-                                        name="check"
-                                        color={'#00c853'}
-                                        size={22}
-                                    />
-                                </TouchableOpacity>
-                                :
-                                <TouchableOpacity
-                                    style={styles.iconButton}
-                                    onPress={() => {
-                                        const keyID = Object.keys(snapshot.val())[key]
-                                        changeStatusProf("true", keyID)
-                                        ToastAndroid.show(`O usuario ${name}, agora é um Profissional`, ToastAndroid.LONG)
-                                    }}
-                                >
-                                    <SimpleLineIcons
-                                        name="close"
-                                        color={'#ff5131'}
-                                        size={22}
-                                    />
-                                </TouchableOpacity>}
+                            ?
+                            <TouchableOpacity
+                                style={styles.iconButton}
+                                onPress={() => {
+                                    const keyID = Object.keys(snapshot.val())[key]
+                                    changeStatusProf("false", keyID)
+                                    ToastAndroid.show(`O usuário ${name} não é mais um Profissional`, ToastAndroid.LONG);
+                                }}
+                            >
+                                <SimpleLineIcons
+                                    name="check"
+                                    color={'#00c853'}
+                                    size={22}
+                                />
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity
+                                style={styles.iconButton}
+                                onPress={() => {
+                                    const keyID = Object.keys(snapshot.val())[key]
+                                    changeStatusProf("true", keyID)
+                                    ToastAndroid.show(`O usuário ${name} agora é um Profissional`, ToastAndroid.LONG)
+                                }}
+                            >
+                                <SimpleLineIcons
+                                    name="close"
+                                    color={'#ff5131'}
+                                    size={22}
+                                />
+                            </TouchableOpacity>}
                         </View>
                     )
                 }))
@@ -78,7 +78,9 @@ function UserList() {
 
     return (
         <View style={styles.containerUser}>
-            {list}
+            <View style={styles.panel}>
+                {list}
+            </View>
         </View>  
     )
 }

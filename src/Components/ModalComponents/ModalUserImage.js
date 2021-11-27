@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     viewModal: {
         height: 300,
         width: 250,
-        backgroundColor:'#212121',
+        backgroundColor:'#171717',
         marginBottom: 150,
         borderRadius: 10,    
     },
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         width: 250,
         height: 30,
         alignItems:'baseline',
-        backgroundColor:'#00071050',
+        backgroundColor:'#00071090',
         position: 'absolute',        
     },
 
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         flexDirection: "row",
         justifyContent: 'space-around',
-        backgroundColor:'#212121',
+        backgroundColor:'#171717',
     },
 
     iconModalInfo: {

@@ -1,9 +1,26 @@
 import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
-    container: {
-        position: 'absolute',
-        justifyContent: 'flex-start'
+    containerUser: {
+        flex: 1,
+        backgroundColor: '#000710',
+    },
+
+    panel: {
+        width: "100%",
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        marginTop: 4,
+        marginBottom: 4,
+        paddingHorizontal: 8,
+    },
+
+    contentUser: {
+        flexDirection: "row",
+        paddingTop: 8,
+        paddingLeft: 12,
+        marginBottom: 8,
     },
 
     button: {
@@ -13,27 +30,6 @@ const styles = StyleSheet.create({
         width: 150,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-
-    containerUser: {
-        backgroundColor: '#000710',
-        width: "100%",
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        borderRadius: 16,
-        borderBottomWidth: 0.2,
-        borderBottomColor: '#f5f5f540',
-        marginTop: 10,
-        paddingHorizontal: 8,
-    },
-
-    contentUser: {
-        flexDirection: "row",
-        paddingTop: 8,
-        paddingLeft: 12,
-        marginBottom: 8,
-
     },
 
     iconButton: {

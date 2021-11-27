@@ -73,7 +73,7 @@ export default function ChatSappy({ route }) {
                     <MaterialCommunityIcons
                         name="send-circle"
                         size={45}
-                        color="white"
+                        color="#f5f5f5"
                     />
                 </View>
             </Send>

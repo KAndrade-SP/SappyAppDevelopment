@@ -73,7 +73,7 @@ function ModalReportUser({open, onClose, Identify}){
                             <View style={styles.containerButton}>
                                 <TouchableOpacity style={styles.floatButton}>
                                     <SimpleLineIcons name="check" color={'#f5f5f5'} size={20}/>
-                                    <Text style={styles.textButton}>Enviar Denúncia</Text>
+                                    <Text style={styles.textButton}>Enviar denúncia</Text>
                                 </TouchableOpacity>
                             </View>
                         </View> 
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: 350, 
         width: 300,
-        backgroundColor:'#212121',
+        backgroundColor:'#171717',
         borderRadius: 10,   
     },
 
@@ -101,12 +101,10 @@ const styles = StyleSheet.create({
         height: 40,
         width: 300,
         paddingHorizontal: 25,
-        paddingBottom: 4,
-        backgroundColor: '#ccad00',
-        borderRadius: 10,
+        backgroundColor: '#000710',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 8,
+        marginBottom: 12,
     },
 
     chatNameModal: {
@@ -169,7 +167,7 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        color: '#f5f5f580',
+        color: '#f5f5f5',
         fontSize: 16,
     },
 
@@ -188,7 +186,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: 200,
         height: 50,        
-        backgroundColor: '#ccad00',
+        backgroundColor: '#000710',
         borderRadius: 100,
         marginTop: 10,
     },

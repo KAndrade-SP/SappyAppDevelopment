@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         alignItems: 'baseline',
         marginTop: 4,
         marginBottom: 8,
-        paddingLeft: 12
+        paddingLeft: 12,
     },
 
     contentButton: {

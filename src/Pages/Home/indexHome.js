@@ -33,8 +33,7 @@ export default function Home() {
         barStyle={{
           backgroundColor: "#000710",
           borderTopWidth: 0.5,
-          borderTopColor: "#ffffff",
-
+          borderTopColor: "#f5f5f5",
           width: Dimensions.get('window').width,
           height: 54,
           zIndex: 9

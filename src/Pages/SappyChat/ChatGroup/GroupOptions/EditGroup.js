@@ -57,7 +57,7 @@ export default function EditGroup({ route }) {
                     <View style={styles.contentInput}>
                         <TextInput
                             onChangeText={e => setTitle(e)}
-                            maxLength={45}
+                            maxLength={25}
                             defaultValue={Title}
                             style={styles.textInput}
                         />
@@ -71,7 +71,7 @@ export default function EditGroup({ route }) {
                     <View style={styles.contentInputDesc}>
                         <TextInput
                             onChangeText={a => setDesc(a)}
-                            maxLength={255}
+                            maxLength={45}
                             multiline
                             numberOfLines={3}
                             defaultValue={Description}

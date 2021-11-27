@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         height: 200, 
         width: 300,
-        backgroundColor:'#212121',
+        backgroundColor:'#171717',
         borderRadius: 10,   
     },
 
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     descOptions: {
         marginLeft: 12,
         marginTop: 6,
-        color: "#f5f5f580",
+        color: "#f5f5f590",
         fontSize: 12,
     }
 
