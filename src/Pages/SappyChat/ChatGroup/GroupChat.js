@@ -65,16 +65,19 @@ export default function ChatGroup() {
             </ScrollView>
 
             {adm == 'true' ? 
-            <TouchableOpacity
-                style={styles.floatButton}
-                onPress={goToCreateGroup}
-            >
-                <SimpleLineIcons
-                    name="plus"
-                    color={'#f5f5f5'}
-                    size={28}
-                />
-            </TouchableOpacity> : <></>}
+            <View style={styles.containerFloatButton}>
+                <TouchableOpacity
+                    style={styles.floatButton}
+                    onPress={goToCreateGroup}
+                >
+                    <SimpleLineIcons
+                        name="plus"
+                        color={'#f5f5f5'}
+                        size={28}
+                    />
+                </TouchableOpacity> 
+            </View>
+            : <></>}
         </>
     )
 }

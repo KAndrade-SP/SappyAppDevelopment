@@ -45,7 +45,7 @@ function ModalDeleteGroup({ open, onClose, ImageGp, Title, Identify }) {
                 <View style={styles.viewModal}>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                         <View style={styles.containerTitle}>
-                            <Text style={styles.chatNameModal}>Excluir Grupo</Text>
+                            <Text style={styles.chatNameModal}>Excluir grupo</Text>
                         </View>
                         <Image
                             style={styles.photo}
@@ -55,7 +55,7 @@ function ModalDeleteGroup({ open, onClose, ImageGp, Title, Identify }) {
                         <Text style={styles.nameGroup}>{Title}</Text>
                         <View style={styles.perfilViewModal}>
                             <View style={styles.contentText}>
-                                <Text style={styles.text}>Você realmente deseja excluir esse grupo?</Text>
+                                <Text style={styles.text}>Deseja excluir esse grupo?</Text>
                             </View>
                             <View style={styles.containerButton}>
                                 <TouchableOpacity style={styles.floatButtonCancel}
@@ -72,7 +72,7 @@ function ModalDeleteGroup({ open, onClose, ImageGp, Title, Identify }) {
                                         onClose()
                                     }}
                                 >
-                                    <SimpleLineIcons name="check" color={'#f5f5f5'} size={20} />
+                                    <SimpleLineIcons name="close" color={'#f5f5f5'} size={20} />
                                     <Text style={styles.textButton}>Excluir</Text>
                                 </TouchableOpacity>
                             </View>
@@ -91,9 +91,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: 320,
+        height: 300,
         width: 300,
-        backgroundColor: '#212121',
+        backgroundColor: '#171717',
         borderRadius: 10,
     },
 
@@ -102,11 +102,10 @@ const styles = StyleSheet.create({
         width: 300,
         paddingHorizontal: 25,
         paddingBottom: 4,
-        backgroundColor: '#ccad00',
-        borderRadius: 10,
+        backgroundColor: '#000710',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 8,
+        marginBottom: 6,
     },
 
     chatNameModal: {
@@ -122,8 +121,9 @@ const styles = StyleSheet.create({
 
     contentText: {
         paddingBottom: 8,
-        paddingTop: 15,
+        paddingTop: 12,
         justifyContent: 'flex-start',
+        alignItems: 'center'
     },
 
     text: {
@@ -140,8 +140,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-start',
         flexDirection: "row",
-        justifyContent: 'space-around',
-        backgroundColor: '#212121',
+        justifyContent: 'space-between',
+        backgroundColor: '#171717',
     },
 
     textButton: {
@@ -157,7 +157,8 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: 'green',
         borderRadius: 100,
-        marginTop: 10,
+        marginTop: 12,
+        marginRight: 6,
     },
 
     floatButtonDelete: {
@@ -168,7 +169,8 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: 'red',
         borderRadius: 100,
-        marginTop: 10,
+        marginTop: 12,
+        marginLeft: 6,
     },
 
     photo: {
@@ -178,6 +180,7 @@ const styles = StyleSheet.create({
         height: 70,
         borderRadius: 70,
         marginBottom: 12,
+        marginTop: 12,
     },
 })
 
