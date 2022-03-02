@@ -51,5 +51,8 @@ https://www.linkedin.com/in/kaique-andrade-silva-viana-338675228
 
 - Rafael Anjos Santos
 
+https://www.linkedin.com/in/rafael-anjos-santos-b72b7b190
+
 - Luis Augusto Pinto
 
+https://www.linkedin.com/in/luis-augusto-pinto
