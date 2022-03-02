@@ -6,6 +6,12 @@ O Sappy é um aplicativo mobile destinado a pessoas com instabilidades emocionai
 
 A aplicação consiste em levar o acesso a uma consulta rápida via chat em tempo real privado ou em grupos administrados por moderadores.
 
+#Planejamento futuro
+
+O Sappy atualmente é um projeto de Trabalho de Conclusão de Curso realizado na ETEC de Embu com intuito de mostrar o conhecimento técnico adquirido pela equipe.
+
+Temos planos de torná-lo em um aplicativo voltado para o mercado de fato, o que tornaria este repositório como privado por questões de privacidade de dados e segurança.
+
 ## Layout mobile
 
 Atualmente em desenvolvimento e revisão...
