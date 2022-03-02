@@ -1,7 +1,5 @@
 # SappyAppDevelopment
 
-  ##
-
 # Sobre o projeto
 
 O Sappy é um aplicativo mobile destinado a pessoas com instabilidades emocionais e profissionais de saúde mental.
