@@ -1,4 +1,4 @@
-# SappyAppDevelopment
+# Sappy
 
 # Sobre o projeto
 
